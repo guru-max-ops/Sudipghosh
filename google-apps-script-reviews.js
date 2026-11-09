@@ -3,27 +3,42 @@
  * GOOGLE APPS SCRIPT: LIVE DATABASE FOR SUDIP GHOSH STUDENT REVIEWS
  * ============================================================================
  * 
- * SETUP INSTRUCTIONS (Takes ~2 minutes):
- * 1. Open Google Sheets (https://sheets.new) in your browser.
- * 2. Name the spreadsheet: "Sudip Ghosh Student Reviews".
- * 3. In the top menu, click: Extensions -> Apps Script.
- * 4. Delete any existing code in the editor, and paste THIS ENTIRE FILE.
- * 5. Click the "Save" (disk) icon.
- * 6. Click the blue "Deploy" button at the top right -> Choose "New deployment".
- * 7. Click the Gear icon next to "Select type" -> Select "Web app".
- * 8. Set the following settings:
- *      - Description: "Live Student Reviews API"
- *      - Execute as: "Me (your email)"
- *      - Who has access: "Anyone"  <-- CRITICAL: Allows website visitors to submit and view reviews!
- * 9. Click "Deploy" (Google will ask you to authorize permissions -> click "Advanced" -> "Go to Sudip Ghosh Reviews (unsafe)").
- * 10. Copy the "Web app URL" (it starts with https://script.google.com/macros/s/.../exec).
- * 11. Paste that URL into index.html inside the REVIEWS_API_URL constant!
+ * SPREADSHEET LINKED:
+ * https://docs.google.com/spreadsheets/d/1sblY4YXl47ZQFRWRFC5_MC5ncF4JOH14Fz7qCM0Tuqw/edit
+ * 
+ * EASY SETUP INSTRUCTIONS (~1-2 minutes):
+ * 1. Open a new tab and go directly to: https://script.new
+ * 2. Delete any existing code in the editor, and paste THIS ENTIRE FILE.
+ * 3. Click the "Save" (disk) icon at the top.
+ * 4. Click the blue "Deploy" button at the top right -> Choose "New deployment".
+ * 5. Click the Gear icon next to "Select type" -> Select "Web app".
+ * 6. Set the following:
+ *      - Description: "Sudip Ghosh Student Reviews API"
+ *      - Execute as: "Me"
+ *      - Who has access: "Anyone"  <-- CRITICAL: Allows public visitors to view & post reviews!
+ * 7. Click "Deploy".
+ *    (If asked to authorize: Click "Authorize Access" -> choose your Google account -> "Advanced" -> "Go to Untitled project (unsafe)" -> "Allow").
+ * 8. Copy the "Web app URL" (starts with https://script.google.com/macros/s/.../exec).
+ * 9. Send that URL here!
  * ============================================================================
  */
 
+const TARGET_SPREADSHEET_ID = '1sblY4YXl47ZQFRWRFC5_MC5ncF4JOH14Fz7qCM0Tuqw';
+
+function getSheet() {
+  if (TARGET_SPREADSHEET_ID) {
+    try {
+      return SpreadsheetApp.openById(TARGET_SPREADSHEET_ID).getActiveSheet();
+    } catch (e) {
+      // Fallback to active spreadsheet if bound
+    }
+  }
+  return SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+}
+
 function doGet(e) {
   try {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    const sheet = getSheet();
     ensureHeaders(sheet);
     
     const rows = sheet.getDataRange().getValues();
@@ -66,7 +81,7 @@ function doGet(e) {
 
 function doPost(e) {
   try {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    const sheet = getSheet();
     ensureHeaders(sheet);
     
     let data = {};
@@ -120,3 +135,4 @@ function jsonResponse(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
 }
+
