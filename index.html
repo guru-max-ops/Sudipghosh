@@ -896,8 +896,8 @@
       border-top: 1px solid rgba(255,255,255,0.06);
     }
     .footer-top {
-      display: grid; grid-template-columns: 1.5fr 1fr 1fr;
-      gap: 48px; margin-bottom: 40px;
+      display: grid; grid-template-columns: 1.3fr 0.8fr 1.3fr;
+      gap: 40px; margin-bottom: 40px;
     }
     .footer-brand .nav-logo-text span:first-child { color: #fff; font-size: 1.3rem; }
     .footer-brand p { font-size: 0.88rem; color: rgba(255,255,255,0.45); line-height: 1.8; margin-top: 14px; }
@@ -910,7 +910,7 @@
       border: 1px solid rgba(255,255,255,0.1);
     }
     .social-btn:hover { background: var(--accent); color: var(--primary); transform: translateY(-3px); border-color: var(--accent); }
-    .footer-col h4 { font-size: 0.95rem; font-weight: 700; color: rgba(255,255,255,0.8); margin-bottom: 16px; }
+    .footer-col h4 { font-size: 0.95rem; font-weight: 700; color: rgba(255,255,255,0.85); margin-bottom: 16px; letter-spacing: 0.02em; }
     .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
     .footer-col ul li a {
       text-decoration: none; color: rgba(255,255,255,0.45);
@@ -920,11 +920,49 @@
     .footer-col ul li a:hover { color: var(--accent); }
     .footer-col ul li a::before { content: '→'; font-size: 0.75rem; }
     .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding-top: 24px; display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 26px; display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px;
     }
-    .footer-bottom p { font-size: 0.82rem; color: rgba(255,255,255,0.3); }
-    .footer-bottom span { color: var(--accent); }
+    .footer-bottom p { font-size: 0.84rem; color: rgba(255,255,255,0.42); margin: 0; }
+    .footer-bottom p span { color: var(--accent); font-weight: 600; }
+    .designer-signature {
+      display: inline-flex;
+      align-items: center;
+    }
+    .designer-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      background: linear-gradient(135deg, rgba(232, 160, 32, 0.12), rgba(46, 125, 159, 0.18));
+      border: 1px solid rgba(232, 160, 32, 0.35);
+      border-radius: 50px;
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.8);
+      letter-spacing: 0.03em;
+      transition: all 0.3s cubic-bezier(.22,1,.36,1);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    }
+    .designer-pill i {
+      color: var(--accent);
+      font-size: 0.82rem;
+    }
+    .designer-pill strong {
+      font-weight: 700;
+      color: #ffffff;
+      background: linear-gradient(135deg, #ffffff 30%, #fbd38d 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 0.04em;
+    }
+    .designer-pill:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      background: linear-gradient(135deg, rgba(232, 160, 32, 0.22), rgba(46, 125, 159, 0.28));
+      box-shadow: 0 6px 20px rgba(232, 160, 32, 0.25);
+    }
 
     /* ===================== SCROLL REVEAL ===================== */
     .reveal {
@@ -1776,20 +1814,26 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Programs</h4>
+        <h4>Coaching Programs</h4>
         <ul>
-          <li><a href="#courses">IIT-JEE Advanced</a></li>
-          <li><a href="#courses">UPSC Civil Services</a></li>
-          <li><a href="#courses">SSC CGL / CHSL</a></li>
-          <li><a href="#courses">RRB NTPC</a></li>
-          <li><a href="#courses">WBCS / State PSC</a></li>
+          <li><a href="#courses">IIT-JEE Foundation &amp; Advanced</a></li>
+          <li><a href="#courses">NEET Physics Specialist</a></li>
+          <li><a href="#courses">Mathematics for CAT Aspirants</a></li>
+          <li><a href="#courses">UPSC Civil Services Prep</a></li>
+          <li><a href="#courses">SSC CGL / CHSL / MTS</a></li>
+          <li><a href="#courses">RRB NTPC / Group D</a></li>
+          <li><a href="#courses">WBCS / West Bengal State PSC</a></li>
           <li><a href="#courses">Mathematics Mastery</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2024 <span>Sudip Ghosh</span>. All rights reserved. Designed with ❤️ for every aspiring student.</p>
-      <p>Kolkata, West Bengal, India</p>
+      <p>© 2024 <span>Sudip Ghosh</span>. All rights reserved. • Kolkata, West Bengal, India</p>
+      <div class="designer-signature">
+        <span class="designer-pill" title="Website Designed by Gurdeep">
+          <i class="fas fa-wand-magic-sparkles"></i> Designed by <strong>Gurdeep</strong>
+        </span>
+      </div>
     </div>
   </div>
 </footer>
