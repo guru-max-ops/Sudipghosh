@@ -580,21 +580,260 @@
       padding: 2px 10px; border-radius: 50px; margin-top: 4px;
     }
 
-    /* ===================== ACHIEVEMENTS ===================== */
-    #achievements { background: var(--light-bg); }
-    .ach-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px;
+    /* ===================== REVIEW ACTION & MODAL ===================== */
+    .review-action-wrap {
+      margin-top: 24px;
+      display: flex;
+      justify-content: center;
     }
-    .ach-card {
-      text-align: center; padding: 32px 24px;
-      background: var(--white); border-radius: var(--radius);
-      border: 1px solid var(--border); box-shadow: var(--shadow);
-      transition: transform var(--transition);
+    .btn-write-review {
+      background: linear-gradient(135deg, var(--primary) 0%, #1f476e 100%);
+      color: #ffffff;
+      border: 1px solid rgba(232, 160, 32, 0.4);
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 18px rgba(26, 60, 94, 0.22);
+      transition: all 0.35s cubic-bezier(.22,1,.36,1);
     }
-    .ach-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
-    .ach-trophy { font-size: 2.5rem; margin-bottom: 14px; }
-    .ach-card h3 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
-    .ach-card p { font-size: 0.82rem; color: var(--text-light); line-height: 1.6; }
+    .btn-write-review:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, var(--accent) 0%, #ffb428 100%);
+      color: #071526;
+      border-color: #ffb428;
+      box-shadow: 0 8px 24px rgba(232, 160, 32, 0.4);
+    }
+    .btn-write-review i {
+      font-size: 0.88rem;
+      transition: transform 0.3s ease;
+    }
+    .btn-write-review:hover i {
+      transform: rotate(-10deg) scale(1.15);
+    }
+
+    /* Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 21, 38, 0.72);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.32s cubic-bezier(.22,1,.36,1), visibility 0.32s;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-container {
+      background: #ffffff;
+      width: 100%;
+      max-width: 620px;
+      border-radius: 24px;
+      padding: 36px 40px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.38), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+      transform: translateY(24px) scale(0.96);
+      transition: transform 0.35s cubic-bezier(.22,1,.36,1);
+      position: relative;
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+    .modal-overlay.active .modal-container {
+      transform: translateY(0) scale(1);
+    }
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 22px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--light-bg);
+      color: var(--text-mid);
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      line-height: 1;
+    }
+    .modal-close:hover {
+      background: var(--primary);
+      color: #fff;
+      transform: rotate(90deg);
+    }
+    .modal-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(232, 160, 32, 0.15);
+      color: #a86c00;
+      border: 1px solid rgba(232, 160, 32, 0.35);
+      padding: 4px 14px;
+      border-radius: 50px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .modal-title {
+      font-family: var(--font-heading);
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 8px;
+      line-height: 1.25;
+    }
+    .modal-subtitle {
+      font-size: 0.92rem;
+      color: var(--text-mid);
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+    .modal-container .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .modal-container .form-group {
+      margin-bottom: 18px;
+    }
+    .modal-container label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 6px;
+    }
+    .modal-container input,
+    .modal-container select,
+    .modal-container textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1.5px solid #cbd5e1;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      color: #0f172a;
+      background: #f8fafc;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+    }
+    .modal-container input::placeholder,
+    .modal-container textarea::placeholder {
+      color: #94a3b8;
+    }
+    .modal-container select option {
+      background: #ffffff;
+      color: #0f172a;
+    }
+    .modal-container input:focus,
+    .modal-container select:focus,
+    .modal-container textarea:focus {
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 4px rgba(46, 125, 159, 0.15);
+      background: #ffffff;
+    }
+    .star-rating-select {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+    }
+    .star-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.45rem;
+      color: #d1d9e2;
+      cursor: pointer;
+      padding: 2px 4px;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+    .star-btn:hover {
+      transform: scale(1.22);
+    }
+    .star-btn.active {
+      color: var(--accent);
+    }
+    .star-feedback {
+      margin-left: 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 26px;
+    }
+    .btn-cancel-review {
+      padding: 12px 22px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      background: #ffffff;
+      color: var(--text-mid);
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-cancel-review:hover {
+      background: var(--light-bg);
+      color: var(--text-dark);
+    }
+    .btn-submit-review {
+      padding: 12px 28px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, var(--accent) 0%, #ffb428 100%);
+      color: #071526;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 16px rgba(232, 160, 32, 0.35);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .btn-submit-review:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(232, 160, 32, 0.45);
+    }
+    .newly-added-review {
+      animation: highlightPulse 2.8s ease;
+    }
+    @keyframes highlightPulse {
+      0% { box-shadow: 0 0 0 4px var(--accent), var(--shadow-lg); transform: translateY(-6px); }
+      70% { box-shadow: 0 0 0 4px rgba(232, 160, 32, 0.3), var(--shadow); }
+      100% { box-shadow: var(--shadow); transform: translateY(0); }
+    }
+    @media (max-width: 600px) {
+      .modal-container { padding: 28px 20px; }
+      .modal-container .form-row { grid-template-columns: 1fr; gap: 0; }
+    }
 
     /* ===================== CONTACT ===================== */
     #contact {
@@ -625,22 +864,22 @@
       background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
       border-radius: var(--radius); padding: 36px; backdrop-filter: blur(12px);
     }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
-    .form-group label { font-size: 0.85rem; font-weight: 500; color: rgba(255,255,255,0.75); }
-    .form-group input, .form-group select, .form-group textarea {
+    .contact-form .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .contact-form .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .contact-form .form-group label { font-size: 0.85rem; font-weight: 500; color: rgba(255,255,255,0.75); }
+    .contact-form .form-group input, .contact-form .form-group select, .contact-form .form-group textarea {
       background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
       border-radius: var(--radius-sm); padding: 12px 16px;
       color: #fff; font-family: 'Inter', sans-serif; font-size: 0.93rem;
       transition: border-color var(--transition), background var(--transition);
       outline: none;
     }
-    .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.35); }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    .contact-form .form-group input::placeholder, .contact-form .form-group textarea::placeholder { color: rgba(255,255,255,0.35); }
+    .contact-form .form-group input:focus, .contact-form .form-group select:focus, .contact-form .form-group textarea:focus {
       border-color: var(--accent); background: rgba(255,255,255,0.12);
     }
-    .form-group select option { background: var(--primary); color: #fff; }
-    .form-group textarea { resize: vertical; min-height: 110px; }
+    .contact-form .form-group select option { background: var(--primary); color: #fff; }
+    .contact-form .form-group textarea { resize: vertical; min-height: 110px; }
     .btn-submit {
       width: 100%; background: linear-gradient(135deg, var(--accent), #d4891a);
       color: var(--primary); font-weight: 700; font-size: 1rem;
@@ -895,7 +1134,6 @@
     <li><a href="#courses">Programs</a></li>
     <li><a href="#why">Why Me</a></li>
     <li><a href="#reviews">Reviews</a></li>
-    <li><a href="#achievements">Achievements</a></li>
     <li><a href="#contact" class="nav-cta">Enroll Now</a></li>
   </ul>
   <div class="hamburger" id="hamburger" onclick="toggleMobileNav()">
@@ -907,7 +1145,6 @@
   <a href="#courses" onclick="closeMobileNav()">Programs</a>
   <a href="#why" onclick="closeMobileNav()">Why Me</a>
   <a href="#reviews" onclick="closeMobileNav()">Reviews</a>
-  <a href="#achievements" onclick="closeMobileNav()">Achievements</a>
   <a href="#contact" onclick="closeMobileNav()">Enroll Now</a>
 </div>
 
@@ -919,23 +1156,24 @@
   <div class="hero-content">
     <div class="hero-left">
       <div class="hero-badge">
-        <i class="fas fa-star"></i> Trusted by 3,500+ Students Across India
+        <i class="fas fa-star"></i> Trusted by 1,500+ Students Across India
       </div>
       <h1 class="hero-title">
         Transforming Aspirations<br/>Into Achievements —<br/><span>Sudip Ghosh</span>
       </h1>
-      <p class="hero-subtitle">Expert Educator &amp; Mentor &nbsp;|&nbsp; IIT-JEE &middot; UPSC &middot; SSC &middot; Railway &middot; State PSC</p>
+      <p class="hero-subtitle">Expert Educator &amp; Mentor &nbsp;|&nbsp; IIT-JEE &middot; NEET Physics &middot; CAT Quantitative &middot; UPSC &middot; SSC &middot; State PSC</p>
       <p class="hero-desc">
-        With over <strong style="color:#fff;">14 years of proven teaching excellence</strong>, I have empowered thousands of students to conquer India's most prestigious competitive examinations — building not just knowledge, but the confidence and discipline to succeed.
+        With over <strong style="color:#fff;">20+ years of proven teaching excellence</strong>, I have empowered thousands of students to conquer India's most demanding competitive examinations — including IIT-JEE, NEET, CAT, UPSC, SSC, and State PSC — building deep conceptual clarity and problem-solving mastery.
       </p>
       <div class="hero-tags">
         <span class="hero-tag">🎯 IIT-JEE</span>
+        <span class="hero-tag">🩺 NEET Physics</span>
+        <span class="hero-tag">📈 CAT Quant &amp; Math</span>
         <span class="hero-tag">🏛️ UPSC</span>
         <span class="hero-tag">📋 SSC</span>
         <span class="hero-tag">🚂 Railway NTPC</span>
         <span class="hero-tag">🏆 State PSC</span>
-        <span class="hero-tag">📐 Mathematics</span>
-        <span class="hero-tag">⚗️ Physics</span>
+        <span class="hero-tag">📐 Advanced Mathematics</span>
       </div>
       <div class="hero-buttons">
         <a href="#contact" class="btn-primary"><i class="fas fa-graduation-cap"></i> Enroll Today</a>
@@ -951,7 +1189,7 @@
       <div class="hero-floating-stat">
         <div class="fs-icon gold"><i class="fas fa-users"></i></div>
         <div class="fs-info">
-          <span class="fs-num">3,500+</span>
+          <span class="fs-num">1,500+</span>
           <span class="fs-label">Students Mentored</span>
         </div>
       </div>
@@ -973,7 +1211,7 @@
       <div class="about-left reveal reveal-left">
         <div class="about-card">
           <h3>About Sudip Ghosh</h3>
-          <p>A distinguished educator from West Bengal, Sudip Ghosh holds a Master's degree in Mathematics from Jadavpur University and brings over 14 years of focused expertise in competitive examination coaching. He is widely recognised for his ability to simplify intricate concepts with clarity, precision, and a student-first approach.</p>
+          <p>A distinguished educator from West Bengal, Sudip Ghosh holds a Master's degree in Mathematics from Jadavpur University and brings over 20+ years of focused expertise in competitive examination coaching. He is widely recognised for his ability to simplify intricate concepts with clarity, precision, and a student-first approach.</p>
         </div>
         <div class="about-quals">
           <div class="qual-item">
@@ -982,7 +1220,7 @@
           </div>
           <div class="qual-item">
             <i class="fas fa-award"></i>
-            <p>14+ Years of Competitive Exam Coaching Experience</p>
+            <p>20+ Years of Competitive Exam Coaching Experience</p>
           </div>
           <div class="qual-item">
             <i class="fas fa-chalkboard-teacher"></i>
@@ -1005,7 +1243,7 @@
           I am <strong>Sudip Ghosh</strong>, and I firmly believe that every student carries the potential to surpass their own expectations — they simply need the right mentor to unlock it. My pedagogy is built on three pillars: conceptual depth, structured practice, and unwavering personalised mentoring.
         </p>
         <p class="about-para">
-          Over the past 14 years, I have personally guided students to rank in the top percentiles of <strong>IIT-JEE</strong>, clear <strong>UPSC Civil Services</strong>, and secure coveted central and state government positions through <strong>SSC, Railway NTPC</strong>, and <strong>State PSC</strong> examinations.
+          Over the past 20+ years, I have personally guided students to rank in the top percentiles of <strong>IIT-JEE</strong>, clear <strong>UPSC Civil Services</strong>, and secure coveted central and state government positions through <strong>SSC, Railway NTPC</strong>, and <strong>State PSC</strong> examinations.
         </p>
         <div class="about-highlights">
           <div class="hl-item">
@@ -1056,9 +1294,9 @@
     <div class="stats-grid">
       <div class="stat-card reveal reveal-pop stagger-1">
         <div class="stat-icon">🎓</div>
-        <div class="stat-num" data-target="3500">0</div>
+        <div class="stat-num" data-target="1500">0</div>
         <div class="stat-label">Students Mentored</div>
-        <div class="stat-sub">Across all programs since 2010</div>
+        <div class="stat-sub">Across all programs since 2004</div>
       </div>
       <div class="stat-card reveal reveal-pop stagger-2">
         <div class="stat-icon">🏆</div>
@@ -1068,15 +1306,15 @@
       </div>
       <div class="stat-card reveal reveal-pop stagger-3">
         <div class="stat-icon">📅</div>
-        <div class="stat-num" data-target="14">0</div>
+        <div class="stat-num" data-target="20">0</div>
         <div class="stat-label">Years of Experience</div>
-        <div class="stat-sub">Competitive exam coaching</div>
+        <div class="stat-sub">Competitive exam coaching excellence</div>
       </div>
       <div class="stat-card reveal reveal-pop stagger-4">
         <div class="stat-icon">🌟</div>
-        <div class="stat-num" data-target="480">0</div>
-        <div class="stat-label">Government Jobs Secured</div>
-        <div class="stat-sub">Central & State-level positions</div>
+        <div class="stat-num" data-target="100">0</div>
+        <div class="stat-label">Government Jobs Secured (%)</div>
+        <div class="stat-sub">Central &amp; State-level positions</div>
       </div>
     </div>
   </div>
@@ -1207,6 +1445,46 @@
           </div>
         </div>
       </div>
+      <div class="course-card reveal reveal-pop stagger-1">
+        <div class="course-header" data-icon="📈">
+          <span class="course-tag">Management</span>
+          <h3>Mathematics for CAT Aspirants</h3>
+        </div>
+        <div class="course-body">
+          <p>Advanced Quantitative Aptitude (QA) and Data Interpretation (DI) coaching for CAT and management entrance exams (XAT, IIFT, SNAP). Focused on high-speed mental math, Vedic techniques, number systems, and advanced problem-solving strategies.</p>
+          <div class="course-subjects">
+            <span class="course-subj">Quantitative Aptitude</span>
+            <span class="course-subj">Arithmetic &amp; Algebra</span>
+            <span class="course-subj">Geometry &amp; Mensuration</span>
+            <span class="course-subj">Modern Math</span>
+            <span class="course-subj">DI &amp; Speed Math</span>
+          </div>
+          <div class="course-meta">
+            <span><i class="fas fa-clock"></i> 6-Month Program</span>
+            <span><i class="fas fa-users"></i> Batch: 15 Students</span>
+          </div>
+        </div>
+      </div>
+      <div class="course-card reveal reveal-pop stagger-2">
+        <div class="course-header" data-icon="🩺">
+          <span class="course-tag">Medical</span>
+          <h3>NEET Physics Specialist</h3>
+        </div>
+        <div class="course-body">
+          <p>Targeted Physics coaching specifically engineered for medical aspirants aiming for a 160+ Physics score in NEET-UG. Features thorough NCERT alignment, numerical problem breakdown, formula mapping, and regular chapter-wise speed tests.</p>
+          <div class="course-subjects">
+            <span class="course-subj">Mechanics</span>
+            <span class="course-subj">Electrodynamics</span>
+            <span class="course-subj">Optics &amp; Waves</span>
+            <span class="course-subj">Modern Physics</span>
+            <span class="course-subj">NCERT Numericals</span>
+          </div>
+          <div class="course-meta">
+            <span><i class="fas fa-clock"></i> 1-Year Program</span>
+            <span><i class="fas fa-users"></i> Batch: 20 Students</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1276,8 +1554,13 @@
       <div class="section-label">Student Testimonials</div>
       <h2 class="section-title">Voices of Transformation</h2>
       <p class="section-desc">More than testimonials — these are accounts of dedication, perseverance, and extraordinary achievement by students who chose to invest in themselves and emerged triumphant.</p>
+      <div class="review-action-wrap">
+        <button type="button" class="btn-write-review" onclick="openReviewModal()">
+          <i class="fas fa-pen-nib"></i> Write a Student Review
+        </button>
+      </div>
     </div>
-    <div class="reviews-grid">
+    <div class="reviews-grid" id="reviewsGrid">
 
       <div class="review-card reveal reveal-pop stagger-1">
         <div class="review-stars">
@@ -1379,59 +1662,6 @@
   </div>
 </section>
 
-<!-- ===================== ACHIEVEMENTS ===================== -->
-<section id="achievements">
-  <div class="container">
-    <div class="text-center reveal">
-      <div class="section-label">Achievements &amp; Milestones</div>
-      <h2 class="section-title">Honours &amp; Achievements</h2>
-      <p class="section-desc">Fourteen years of dedicated service to education, marked by distinguished awards, institutional recognition, and thousands of student success stories that define a legacy of excellence.</p>
-    </div>
-    <div class="ach-grid">
-      <div class="ach-card reveal reveal-pop stagger-1">
-        <div class="ach-trophy">🥇</div>
-        <h3>Best Educator Award</h3>
-        <p>Bengal Teachers Forum 2022 — Awarded for outstanding and transformative contributions to competitive examination education across West Bengal.</p>
-      </div>
-      <div class="ach-card reveal reveal-pop stagger-2">
-        <div class="ach-trophy">📚</div>
-        <h3>Published Author</h3>
-        <p>Author of three authoritative Mathematics practice guides, widely adopted by SSC and State PSC aspirants across West Bengal for their depth and examination relevance.</p>
-      </div>
-      <div class="ach-card reveal reveal-pop stagger-3">
-        <div class="ach-trophy">🎖️</div>
-        <h3>Excellence in Teaching</h3>
-        <p>Education Innovation Council 2021 — Recognised for pioneering pedagogical innovation in competitive examination coaching and student outcome improvement.</p>
-      </div>
-      <div class="ach-card reveal reveal-pop stagger-4">
-        <div class="ach-trophy">📺</div>
-        <h3>Media Recognition</h3>
-        <p>Featured on ABP Ananda and Zee 24 Ghanta for delivering exceptional student outcomes in state-level and national competitive examinations.</p>
-      </div>
-      <div class="ach-card reveal reveal-pop stagger-5">
-        <div class="ach-trophy">🌐</div>
-        <h3>Online Reach</h3>
-        <p>Over 50,000 students reached through YouTube lectures, free webinars, and complimentary digital study resources — making quality education accessible to all.</p>
-      </div>
-      <div class="ach-card reveal reveal-pop stagger-6">
-        <div class="ach-trophy">🤝</div>
-        <h3>Community Initiative</h3>
-        <p>Pro bono coaching initiative for economically disadvantaged students — over 200 full scholarships awarded since 2018, ensuring opportunity is never limited by circumstance.</p>
-      </div>
-      <div class="ach-card reveal reveal-pop stagger-1">
-        <div class="ach-trophy">🏫</div>
-        <h3>Partnered Institutions</h3>
-        <p>Strategic collaborations with five or more prestigious coaching institutions across Kolkata for joint curriculum development, faculty workshops, and academic excellence programmes.</p>
-      </div>
-      <div class="ach-card reveal reveal-pop stagger-2">
-        <div class="ach-trophy">⭐</div>
-        <h3>4.9★ Avg. Rating</h3>
-        <p>Consistently rated 4.9 out of 5 by students across all batches — a testament to uncompromising teaching quality and genuine student satisfaction.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ===================== CONTACT ===================== -->
 <section id="contact">
   <div class="container">
@@ -1445,21 +1675,21 @@
             <div class="contact-item-icon"><i class="fas fa-phone"></i></div>
             <div class="contact-item-info">
               <h4>Phone &amp; WhatsApp</h4>
-              <p>+91 98300 XXXXX</p>
+              <p><a href="tel:+919903146708" style="color: inherit; text-decoration: none;">+91 9903146708</a></p>
             </div>
           </div>
           <div class="contact-item">
             <div class="contact-item-icon"><i class="fas fa-envelope"></i></div>
             <div class="contact-item-info">
               <h4>Email Address</h4>
-              <p>sudipghosh.edu@gmail.com</p>
+              <p><a href="mailto:sudipxyghosh@gmail.com" style="color: inherit; text-decoration: none;">sudipxyghosh@gmail.com</a></p>
             </div>
           </div>
           <div class="contact-item">
             <div class="contact-item-icon"><i class="fas fa-map-marker-alt"></i></div>
             <div class="contact-item-info">
               <h4>Coaching Center</h4>
-              <p>Salt Lake, Sector V, Kolkata — 700091</p>
+              <p>4/79B/1, Vidyasagar Colony, Kolkata 47, 700047</p>
             </div>
           </div>
           <div class="contact-item">
@@ -1491,7 +1721,9 @@
             <label>Program of Interest <span style="color:var(--accent)">*</span></label>
             <select required>
               <option value="">Select a program...</option>
-              <option>IIT-JEE Foundation & Advanced</option>
+              <option>IIT-JEE Foundation &amp; Advanced</option>
+              <option>NEET Physics Specialist</option>
+              <option>Mathematics for CAT Aspirants</option>
               <option>UPSC Civil Services Prep</option>
               <option>SSC CGL / CHSL / MTS</option>
               <option>RRB NTPC / Group D</option>
@@ -1524,7 +1756,7 @@
             <span>Expert Educator</span>
           </div>
         </div>
-        <p>Empowering students across West Bengal to excel in India's most prestigious competitive examinations through dedicated coaching, proven strategies, and personalised mentoring — since 2010.</p>
+        <p>Empowering students across West Bengal to excel in India's most prestigious competitive examinations through dedicated coaching, proven strategies, and personalised mentoring — since 2004.</p>
         <div class="footer-social">
           <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
           <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
@@ -1540,7 +1772,6 @@
           <li><a href="#courses">Programs</a></li>
           <li><a href="#why">Why Choose Me</a></li>
           <li><a href="#reviews">Student Reviews</a></li>
-          <li><a href="#achievements">Achievements</a></li>
           <li><a href="#contact">Enroll Now</a></li>
         </ul>
       </div>
@@ -1567,6 +1798,72 @@
 <button id="back-top" onclick="scrollToTop()" title="Back to top">
   <i class="fas fa-chevron-up"></i>
 </button>
+
+<!-- ===================== REVIEW SUBMISSION MODAL ===================== -->
+<div id="reviewModal" class="modal-overlay" onclick="handleModalBackdropClick(event)">
+  <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button type="button" class="modal-close" onclick="closeReviewModal()" aria-label="Close review form">&times;</button>
+    <div class="modal-header">
+      <div class="modal-pill"><i class="fas fa-award"></i> Student Testimonial</div>
+      <h3 id="modalTitle" class="modal-title">Share Your Success Story</h3>
+      <p class="modal-subtitle">Your journey inspires future aspirants. Please share your genuine experience learning under Sudip Ghosh's guidance.</p>
+    </div>
+    <form id="studentReviewForm" onsubmit="handleReviewSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="reviewName">Full Name <span style="color:var(--accent)">*</span></label>
+          <input type="text" id="reviewName" placeholder="e.g. Sourav Mukherjee" required />
+        </div>
+        <div class="form-group">
+          <label for="reviewEmail">Email Address <span style="font-size:0.75rem; color:var(--text-light); font-weight:400;">(Verification only)</span></label>
+          <input type="email" id="reviewEmail" placeholder="your@email.com" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="reviewProgram">Program / Exam Prepared For <span style="color:var(--accent)">*</span></label>
+          <select id="reviewProgram" required>
+            <option value="">Select your examination track...</option>
+            <option value="IIT-JEE Foundation &amp; Advanced">IIT-JEE Foundation &amp; Advanced</option>
+            <option value="NEET Physics Specialist">NEET Physics Specialist</option>
+            <option value="Mathematics for CAT Aspirants">Mathematics for CAT Aspirants</option>
+            <option value="UPSC Civil Services Prep">UPSC Civil Services Prep</option>
+            <option value="SSC CGL / CHSL / MTS">SSC CGL / CHSL / MTS</option>
+            <option value="RRB NTPC / Group D">RRB NTPC / Group D</option>
+            <option value="West Bengal State PSC (WBCS)">West Bengal State PSC (WBCS)</option>
+            <option value="Mathematics Mastery">Mathematics Mastery</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="reviewBadge">Current Role / College / Rank <span style="color:var(--accent)">*</span></label>
+          <input type="text" id="reviewBadge" placeholder="e.g. IIT Delhi CSE / AIR 512" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Your Overall Rating <span style="color:var(--accent)">*</span></label>
+        <div class="star-rating-select" id="starRatingSelect">
+          <button type="button" class="star-btn active" data-rating="1" onclick="setStarRating(1)" title="1 Star"><i class="fas fa-star"></i></button>
+          <button type="button" class="star-btn active" data-rating="2" onclick="setStarRating(2)" title="2 Stars"><i class="fas fa-star"></i></button>
+          <button type="button" class="star-btn active" data-rating="3" onclick="setStarRating(3)" title="3 Stars"><i class="fas fa-star"></i></button>
+          <button type="button" class="star-btn active" data-rating="4" onclick="setStarRating(4)" title="4 Stars"><i class="fas fa-star"></i></button>
+          <button type="button" class="star-btn active" data-rating="5" onclick="setStarRating(5)" title="5 Stars"><i class="fas fa-star"></i></button>
+          <span class="star-feedback" id="starFeedback">5.0 / 5.0 (Exceptional Mentoring)</span>
+        </div>
+        <input type="hidden" id="reviewRating" value="5" />
+      </div>
+      <div class="form-group">
+        <label for="reviewText">Your Detailed Testimonial <span style="color:var(--accent)">*</span></label>
+        <textarea id="reviewText" rows="4" placeholder="Describe the teaching methodology, conceptual clarity, mentoring, and results you achieved with Sir..." required></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel-review" onclick="closeReviewModal()">Cancel</button>
+        <button type="submit" class="btn-submit-review">
+          <i class="fas fa-check-circle"></i> Submit Review
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 
 <!-- ===================== TOAST ===================== -->
 <div id="toast">
@@ -1643,6 +1940,151 @@
     document.getElementById('toast-msg').textContent = msg;
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+
+  /* ---- REVIEW MODAL LOGIC ---- */
+  let currentReviewRating = 5;
+  const ratingLabels = {
+    1: '1.0 / 5.0 (Needs Improvement)',
+    2: '2.0 / 5.0 (Average Experience)',
+    3: '3.0 / 5.0 (Good Mentoring)',
+    4: '4.0 / 5.0 (Very Good)',
+    5: '5.0 / 5.0 (Exceptional Mentoring)'
+  };
+
+  function openReviewModal() {
+    const modal = document.getElementById('reviewModal');
+    if (modal) {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        const firstInput = document.getElementById('reviewName');
+        if (firstInput) firstInput.focus();
+      }, 100);
+    }
+  }
+
+  function closeReviewModal() {
+    const modal = document.getElementById('reviewModal');
+    if (modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function handleModalBackdropClick(e) {
+    if (e.target && e.target.id === 'reviewModal') {
+      closeReviewModal();
+    }
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeReviewModal();
+  });
+
+  function setStarRating(rating) {
+    currentReviewRating = rating;
+    const ratingInput = document.getElementById('reviewRating');
+    if (ratingInput) ratingInput.value = rating;
+
+    const buttons = document.querySelectorAll('#starRatingSelect .star-btn');
+    buttons.forEach((btn, idx) => {
+      if (idx < rating) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+    const feedback = document.getElementById('starFeedback');
+    if (feedback) {
+      feedback.textContent = ratingLabels[rating] || (rating + '.0 / 5.0');
+    }
+  }
+
+  const reviewAvatarGradients = [
+    'linear-gradient(135deg, #667eea, #764ba2)',
+    'linear-gradient(135deg, #f093fb, #f5576c)',
+    'linear-gradient(135deg, #4facfe, #00f2fe)',
+    'linear-gradient(135deg, #43e97b, #38f9d7)',
+    'linear-gradient(135deg, #fa709a, #fee140)',
+    'linear-gradient(135deg, #a18cd1, #fbc2eb)',
+    'linear-gradient(135deg, #2e7d9f, #e8a020)'
+  ];
+
+  function getStudentInitials(name) {
+    if (!name) return 'SG';
+    const parts = name.trim().split(/\s+/);
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  }
+
+  function escapeReviewText(str) {
+    return str.replace(/[&<>'"]/g, tag => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    }[tag] || tag));
+  }
+
+  function handleReviewSubmit(e) {
+    e.preventDefault();
+    const name = document.getElementById('reviewName').value.trim();
+    const program = document.getElementById('reviewProgram').value;
+    const badge = document.getElementById('reviewBadge').value.trim();
+    const text = document.getElementById('reviewText').value.trim();
+    const rating = parseInt(document.getElementById('reviewRating').value) || 5;
+
+    if (!name || !program || !badge || !text) return;
+
+    // Build Stars
+    let starsHtml = '';
+    for (let i = 1; i <= 5; i++) {
+      if (i <= rating) {
+        starsHtml += '<i class="fas fa-star"></i>';
+      } else {
+        starsHtml += '<i class="far fa-star"></i>';
+      }
+    }
+
+    const randomGradient = reviewAvatarGradients[Math.floor(Math.random() * reviewAvatarGradients.length)];
+    const initials = getStudentInitials(name);
+
+    // Create card element
+    const card = document.createElement('div');
+    card.className = 'review-card newly-added-review';
+    card.innerHTML = `
+      <div class="review-stars">
+        ${starsHtml}
+      </div>
+      <p class="review-text">"${escapeReviewText(text)}"</p>
+      <div class="review-author">
+        <div class="author-avatar" style="background: ${randomGradient};">${initials}</div>
+        <div class="author-info">
+          <h4>${escapeReviewText(name)}</h4>
+          <p>${escapeReviewText(program)}</p>
+          <span class="review-badge">${escapeReviewText(badge)}</span>
+        </div>
+      </div>
+    `;
+
+    const grid = document.getElementById('reviewsGrid');
+    if (grid) {
+      grid.insertBefore(card, grid.firstChild);
+    }
+
+    // Reset and close
+    e.target.reset();
+    setStarRating(5);
+    closeReviewModal();
+
+    // Feedback
+    showToast(`Thank you, ${name}! Your review has been added.`);
+
+    setTimeout(() => {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 250);
   }
 
   /* ---- SMOOTH NAV ACTIVE ---- */

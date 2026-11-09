@@ -1,6 +1,6 @@
 # Sudip Ghosh — Expert Educator & Mentor
 
-Official portfolio website for **Sudip Ghosh**, Expert Educator specializing in IIT-JEE, UPSC, SSC, Railway NTPC, and State PSC competitive examinations with over 14+ years of dedicated mentoring experience.
+Official portfolio website for **Sudip Ghosh**, Expert Educator specializing in IIT-JEE, NEET Physics, CAT Quantitative, UPSC, SSC, Railway NTPC, and State PSC competitive examinations with over 20+ years of dedicated mentoring experience.
 
 ## ✨ Features & Architecture
 
