@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Test Originkit Components</title>
+  <link rel="stylesheet" href="stained-glass.css">
+  <link rel="stylesheet" href="cloud-sky.css">
+  <style>
+    body { margin: 0; background: #111; color: #fff; font-family: sans-serif; }
+    .box { width: 100vw; height: 50vh; position: relative; border-bottom: 2px solid red; }
+    h2 { position: absolute; z-index: 10; top: 20px; left: 20px; margin: 0; }
+  </style>
+</head>
+<body>
+  <div class="box" id="hero-box">
+    <h2>Stained Glass Test</h2>
+    <div class="stained-glass-container" id="stained-glass-test"></div>
+  </div>
+
+  <div class="box" id="stats-box">
+    <h2>Cloud Sky Test</h2>
+    <div class="cloud-sky-container" id="cloud-sky-test">
+      <canvas id="cloud-sky-canvas-test" class="cloud-sky-canvas"></canvas>
+    </div>
+  </div>
+
+  <script src="three.min.js"></script>
+  <script src="stained-glass.js"></script>
+  <script src="cloud-sky.js"></script>
+
+  <script>
+    console.log("Starting test...");
+    const heroGlass = document.getElementById('stained-glass-test');
+    if (heroGlass && window.initStainedGlass) {
+      window.initStainedGlass(heroGlass, {
+        palette: ["#FF4D0F", "#FFA51F", "#FFE3A3", "#C6D64B", "#2FA8C8", "#A82820"],
+        lead: "#000000",
+        lightColor: "#FFF3D6",
+        cellSize: 15,
+        irregularity: 20,
+        leadWidth: 1,
+        backlight: 5,
+        lightRadius: 3,
+        speed: 20,
+        contrast: 20
+      });
+      console.log("initStainedGlass called");
+    }
+
+    const statsBox = document.getElementById('stats-box');
+    const cloudSkyCanvas = document.getElementById('cloud-sky-canvas-test');
+    if (statsBox && cloudSkyCanvas && window.initCloudSky) {
+      window.initCloudSky(statsBox, cloudSkyCanvas, {
+        background: "#0075FF",
+        baseColor: "#B4D2F0",
+        accentColor: "#FFFFFF",
+        density: 100,
+        speed: 64,
+        size: 130,
+        sun: { x: 100, y: 100, glow: "#FFFFFF" },
+        clouds: { cirrus: 100, shadow: 70, softness: 200 },
+        pointer: { wind: 300, damping: 50, parallax: 300 }
+      });
+      console.log("initCloudSky called");
+    }
+  </script>
+</body>
+</html>

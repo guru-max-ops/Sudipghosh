@@ -1,0 +1,28 @@
+.stained-glass-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.stained-glass-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Subtle vignette to preserve rich stained glass colors and contrast */
+.stained-glass-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 75% 50%, transparent 20%, rgba(5, 12, 22, 0.45) 100%),
+              linear-gradient(90deg, rgba(5, 12, 22, 0.55) 0%, rgba(5, 12, 22, 0.15) 50%, rgba(5, 12, 22, 0.35) 100%);
+  pointer-events: none;
+}
