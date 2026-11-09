@@ -6,7 +6,7 @@
   <title>Sudip Ghosh | Expert Educator & Mentor</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="cloud-sky.css" />
   <link rel="stylesheet" href="formula-stream.css" />
@@ -17,6 +17,9 @@
     html { scroll-behavior: smooth; font-size: 16px; }
 
     :root {
+      --font-display: 'Cinzel', 'Playfair Display', serif;
+      --font-heading: 'Playfair Display', serif;
+      --font-body:    'Plus Jakarta Sans', 'Poppins', sans-serif;
       --primary:   #1a3c5e;
       --accent:    #e8a020;
       --accent2:   #2e7d9f;
@@ -35,10 +38,11 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: var(--font-body);
       background: var(--white);
       color: var(--text-dark);
       overflow-x: hidden;
+      letter-spacing: -0.01em;
     }
 
     /* ===================== SCROLLBAR ===================== */
@@ -161,10 +165,11 @@
     }
     .hero-badge i { font-size: 0.75rem; }
     .hero-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.5rem, 5.2vw, 4.2rem);
-      font-weight: 900; color: #fff; line-height: 1.12;
-      margin-bottom: 12px;
+      font-family: var(--font-heading);
+      font-size: clamp(2.6rem, 5.4vw, 4.3rem);
+      font-weight: 900; color: #fff; line-height: 1.14;
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
       text-shadow: 0 4px 20px rgba(0,0,0,0.9), 0 2px 6px rgba(0,0,0,0.8);
       animation: fadeSlideUp 0.6s 0.2s both;
     }
@@ -281,9 +286,10 @@
       background: var(--accent); border-radius: 2px;
     }
     .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 4vw, 2.8rem);
-      font-weight: 800; color: var(--primary); line-height: 1.2; margin-bottom: 16px;
+      font-family: var(--font-heading);
+      font-size: clamp(2.1rem, 4.2vw, 3rem);
+      font-weight: 800; color: var(--primary); line-height: 1.22; margin-bottom: 16px;
+      letter-spacing: -0.02em;
     }
     .section-desc {
       font-size: 1rem; color: var(--text-mid); line-height: 1.8; max-width: 600px;
@@ -683,14 +689,122 @@
 
     /* ===================== SCROLL REVEAL ===================== */
     .reveal {
-      opacity: 0; transform: translateY(32px);
-      transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.75s cubic-bezier(.22,1,.36,1), transform 0.75s cubic-bezier(.22,1,.36,1);
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.18s; }
+    .reveal-delay-3 { transition-delay: 0.28s; }
+    .reveal-delay-4 { transition-delay: 0.38s; }
+
+    /* Slide-in from left */
+    .reveal-left {
+      opacity: 0; transform: translateX(-48px);
+      transition: opacity 0.75s cubic-bezier(.22,1,.36,1), transform 0.75s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+    /* Slide-in from right */
+    .reveal-right {
+      opacity: 0; transform: translateX(48px);
+      transition: opacity 0.75s cubic-bezier(.22,1,.36,1), transform 0.75s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* Scale-in pop */
+    .reveal-pop {
+      opacity: 0; transform: scale(0.88);
+      transition: opacity 0.6s cubic-bezier(.22,1,.36,1), transform 0.6s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal-pop.visible { opacity: 1; transform: scale(1); }
+
+    /* Stagger helpers */
+    .stagger-1 { transition-delay: 0.05s; }
+    .stagger-2 { transition-delay: 0.13s; }
+    .stagger-3 { transition-delay: 0.21s; }
+    .stagger-4 { transition-delay: 0.29s; }
+    .stagger-5 { transition-delay: 0.37s; }
+    .stagger-6 { transition-delay: 0.45s; }
+
+    /* Section entrance shimmer on light sections only */
+    @keyframes shimmer-slide {
+      0%   { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    :not(#why):not(#stats):not(#contact) > .container .section-title.shimmer-once {
+      background: linear-gradient(90deg, var(--primary) 30%, var(--accent) 50%, var(--primary) 70%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer-slide 1.4s ease forwards;
+    }
+
+    /* Floating pulse on badges */
+    @keyframes badge-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(232, 160, 32, 0.4); }
+      50%       { box-shadow: 0 0 0 8px rgba(232, 160, 32, 0); }
+    }
+    .hero-badge { animation: badge-pulse 2.4s ease infinite; }
+
+    /* Smooth underline draw on section accent line */
+    @keyframes line-draw {
+      from { width: 0; }
+      to   { width: 60px; }
+    }
+    .text-center.reveal.visible .section-title::after,
+    .about-right.reveal.visible .section-title::after {
+      animation: line-draw 0.6s 0.4s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    /* Card hover lift with glow */
+    .why-card, .course-card, .review-card, .ach-card {
+      will-change: transform;
+    }
+    .course-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(26,60,94,0.18);
+    }
+    .ach-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 20px 50px rgba(26,60,94,0.18);
+    }
+    .review-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 44px rgba(26,60,94,0.16);
+    }
+
+    /* Icon spin on hover */
+    .ach-trophy {
+      display: inline-block;
+      transition: transform 0.4s cubic-bezier(.22,1,.36,1);
+    }
+    .ach-card:hover .ach-trophy { transform: rotate(12deg) scale(1.18); }
+
+    /* Hero title word fade-in */
+    @keyframes hero-word-in {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-title { animation: hero-word-in 0.9s 0.3s cubic-bezier(.22,1,.36,1) both; }
+    .hero-subtitle { animation: hero-word-in 0.9s 0.5s cubic-bezier(.22,1,.36,1) both; }
+    .hero-desc    { animation: hero-word-in 0.9s 0.65s cubic-bezier(.22,1,.36,1) both; }
+    .hero-tags    { animation: hero-word-in 0.9s 0.78s cubic-bezier(.22,1,.36,1) both; }
+    .hero-buttons { animation: hero-word-in 0.9s 0.9s cubic-bezier(.22,1,.36,1) both; }
+
+    /* Stat cards count-in pulse */
+    @keyframes stat-pop {
+      0%   { transform: scale(0.8); opacity: 0; }
+      70%  { transform: scale(1.05); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .stat-card.reveal-pop.visible { animation: stat-pop 0.55s cubic-bezier(.22,1,.36,1) both; }
+
+    /* Scroll-triggered section title glow on #why, #achievements */
+    #why .section-title, #achievements .section-title {
+      transition: text-shadow 0.5s ease;
+    }
 
     /* ===================== TOAST ===================== */
     #toast {
@@ -805,14 +919,14 @@
   <div class="hero-content">
     <div class="hero-left">
       <div class="hero-badge">
-        <i class="fas fa-star"></i> Trusted by 3,500+ Students
+        <i class="fas fa-star"></i> Trusted by 3,500+ Students Across India
       </div>
       <h1 class="hero-title">
-        Shaping Futures,<br/>One Student<br/>at a Time — <span>Sudip Ghosh</span>
+        Transforming Aspirations<br/>Into Achievements —<br/><span>Sudip Ghosh</span>
       </h1>
-      <p class="hero-subtitle">Expert Educator | IIT-JEE & Government Exam Specialist</p>
+      <p class="hero-subtitle">Expert Educator &amp; Mentor &nbsp;|&nbsp; IIT-JEE &middot; UPSC &middot; SSC &middot; Railway &middot; State PSC</p>
       <p class="hero-desc">
-        With over <strong style="color:#fff;">14 years of dedicated teaching experience</strong>, I have guided thousands of students to crack India's most prestigious competitive examinations — IIT-JEE, UPSC, SSC, Railway, and State PSC exams with consistent top results.
+        With over <strong style="color:#fff;">14 years of proven teaching excellence</strong>, I have empowered thousands of students to conquer India's most prestigious competitive examinations — building not just knowledge, but the confidence and discipline to succeed.
       </p>
       <div class="hero-tags">
         <span class="hero-tag">🎯 IIT-JEE</span>
@@ -832,7 +946,7 @@
       <div class="hero-avatar">
         <div class="hero-avatar-inner">SG</div>
         <span class="hero-avatar-initials">SG</span>
-        <div class="hero-avatar-badge">🏆 Top Educator 2024</div>
+        <div class="hero-avatar-badge">🏆 Top Educator · 2024</div>
       </div>
       <div class="hero-floating-stat">
         <div class="fs-icon gold"><i class="fas fa-users"></i></div>
@@ -856,10 +970,10 @@
 <section id="about">
   <div class="container">
     <div class="about-grid">
-      <div class="about-left reveal">
+      <div class="about-left reveal reveal-left">
         <div class="about-card">
-          <h3>Who is Sudip Ghosh?</h3>
-          <p>A passionate educator from West Bengal with a Master's in Mathematics from Jadavpur University and 14+ years of experience in competitive exam coaching. Known for his ability to simplify complex topics with clarity and precision.</p>
+          <h3>About Sudip Ghosh</h3>
+          <p>A distinguished educator from West Bengal, Sudip Ghosh holds a Master's degree in Mathematics from Jadavpur University and brings over 14 years of focused expertise in competitive examination coaching. He is widely recognised for his ability to simplify intricate concepts with clarity, precision, and a student-first approach.</p>
         </div>
         <div class="about-quals">
           <div class="qual-item">
@@ -884,21 +998,21 @@
           </div>
         </div>
       </div>
-      <div class="about-right reveal reveal-delay-2">
+      <div class="about-right reveal reveal-right reveal-delay-2">
         <div class="section-label">About Me</div>
-        <h2 class="section-title">Dedicated to Your <span style="color:var(--accent2)">Academic Success</span></h2>
+        <h2 class="section-title">Committed to Your <span style="color:var(--accent2)">Academic Excellence</span></h2>
         <p class="about-para">
-          I am <strong>Sudip Ghosh</strong>, an educator who believes every student has the potential to achieve their dreams — they just need the right guidance. My teaching philosophy is rooted in building strong fundamentals, consistent practice, and personalized mentoring.
+          I am <strong>Sudip Ghosh</strong>, and I firmly believe that every student carries the potential to surpass their own expectations — they simply need the right mentor to unlock it. My pedagogy is built on three pillars: conceptual depth, structured practice, and unwavering personalised mentoring.
         </p>
         <p class="about-para">
-          Over the past 14 years, I have personally guided students to rank in the top percentiles of <strong>IIT-JEE</strong>, crack <strong>UPSC Civil Services</strong>, and secure central and state government jobs through <strong>SSC, Railway</strong> and <strong>State PSC</strong> examinations.
+          Over the past 14 years, I have personally guided students to rank in the top percentiles of <strong>IIT-JEE</strong>, clear <strong>UPSC Civil Services</strong>, and secure coveted central and state government positions through <strong>SSC, Railway NTPC</strong>, and <strong>State PSC</strong> examinations.
         </p>
         <div class="about-highlights">
           <div class="hl-item">
             <div class="hl-icon"><i class="fas fa-brain"></i></div>
             <div class="hl-text">
               <h4>Concept-First Teaching</h4>
-              <p>Deep clarity over rote learning</p>
+              <p>Deep understanding over rote memorisation</p>
             </div>
           </div>
           <div class="hl-item">
@@ -911,15 +1025,15 @@
           <div class="hl-item">
             <div class="hl-icon"><i class="fas fa-users"></i></div>
             <div class="hl-text">
-              <h4>Small Batch Size</h4>
-              <p>Personal attention guaranteed</p>
+              <h4>Limited Batch Sizes</h4>
+              <p>Personalised attention, guaranteed</p>
             </div>
           </div>
           <div class="hl-item">
             <div class="hl-icon"><i class="fas fa-clock"></i></div>
             <div class="hl-text">
-              <h4>Doubt Sessions</h4>
-              <p>Daily 1-on-1 clarity sessions</p>
+              <h4>Daily Doubt Sessions</h4>
+              <p>No question ever goes unanswered</p>
             </div>
           </div>
         </div>
@@ -935,30 +1049,30 @@
   </div>
   <div class="container">
     <div class="text-center stats-heading reveal">
-      <div class="section-label">Numbers Speak</div>
-      <h2 class="section-title">Results That Define Excellence</h2>
-      <p class="section-desc">Every number represents a student whose life we helped transform through dedication, hard work, and smart preparation.</p>
+      <div class="section-label">Numbers That Speak</div>
+      <h2 class="section-title">Results That Define a Legacy</h2>
+      <p class="section-desc">Each figure represents a life transformed — a student who dared to dream, committed to the process, and emerged victorious under our guidance.</p>
     </div>
     <div class="stats-grid">
-      <div class="stat-card reveal reveal-delay-1">
+      <div class="stat-card reveal reveal-pop stagger-1">
         <div class="stat-icon">🎓</div>
         <div class="stat-num" data-target="3500">0</div>
         <div class="stat-label">Students Mentored</div>
         <div class="stat-sub">Across all programs since 2010</div>
       </div>
-      <div class="stat-card reveal reveal-delay-2">
+      <div class="stat-card reveal reveal-pop stagger-2">
         <div class="stat-icon">🏆</div>
         <div class="stat-num" data-target="92">0</div>
         <div class="stat-label">Success Rate (%)</div>
         <div class="stat-sub">Consistently above 90% for 5 years</div>
       </div>
-      <div class="stat-card reveal reveal-delay-3">
+      <div class="stat-card reveal reveal-pop stagger-3">
         <div class="stat-icon">📅</div>
         <div class="stat-num" data-target="14">0</div>
         <div class="stat-label">Years of Experience</div>
         <div class="stat-sub">Competitive exam coaching</div>
       </div>
-      <div class="stat-card reveal reveal-delay-4">
+      <div class="stat-card reveal reveal-pop stagger-4">
         <div class="stat-icon">🌟</div>
         <div class="stat-num" data-target="480">0</div>
         <div class="stat-label">Government Jobs Secured</div>
@@ -972,18 +1086,18 @@
 <section id="courses">
   <div class="container">
     <div class="text-center reveal">
-      <div class="section-label">Programs Offered</div>
-      <h2 class="section-title">Expert Coaching Programs</h2>
-      <p class="section-desc">Carefully curated programs designed to give you the best chance of clearing India's most competitive examinations.</p>
+      <div class="section-label">Our Programs</div>
+      <h2 class="section-title">Specialised Coaching Programs</h2>
+      <p class="section-desc">Meticulously designed programs that equip students with the knowledge, strategy, and mindset required to excel in India's most competitive examinations.</p>
     </div>
     <div class="courses-grid">
-      <div class="course-card reveal reveal-delay-1">
+      <div class="course-card reveal reveal-pop stagger-1">
         <div class="course-header" data-icon="🎯">
           <span class="course-tag">Most Popular</span>
           <h3>IIT-JEE Foundation & Advanced</h3>
         </div>
         <div class="course-body">
-          <p>Comprehensive coaching for IIT-JEE Mains and Advanced with concept-building, mock tests, and rigorous problem-solving practice tailored for aspirants in Class 11 & 12.</p>
+          <p>A rigorous two-year programme for IIT-JEE Mains and Advanced aspirants in Classes 11 & 12, integrating deep concept development, strategic mock testing, and intensive problem-solving to build exam-ready confidence.</p>
           <div class="course-subjects">
             <span class="course-subj">Mathematics</span>
             <span class="course-subj">Physics</span>
@@ -997,13 +1111,13 @@
           </div>
         </div>
       </div>
-      <div class="course-card reveal reveal-delay-2">
+      <div class="course-card reveal reveal-pop stagger-2">
         <div class="course-header" data-icon="🏛️">
           <span class="course-tag">Govt. Exams</span>
           <h3>UPSC Civil Services Prep</h3>
         </div>
         <div class="course-body">
-          <p>Structured UPSC preparation covering Prelims, Mains, and Interview stages with comprehensive subject coverage, answer writing practice, and regular mentoring sessions.</p>
+          <p>A comprehensive preparation programme covering all three stages — Prelims, Mains, and Interview — with extensive subject coverage, structured answer-writing workshops, and consistent one-on-one mentoring.</p>
           <div class="course-subjects">
             <span class="course-subj">GS Paper I-IV</span>
             <span class="course-subj">Essay Writing</span>
@@ -1016,13 +1130,13 @@
           </div>
         </div>
       </div>
-      <div class="course-card reveal reveal-delay-3">
+      <div class="course-card reveal reveal-pop stagger-3">
         <div class="course-header" data-icon="📋">
           <span class="course-tag">Central Govt</span>
           <h3>SSC CGL / CHSL / MTS</h3>
         </div>
         <div class="course-body">
-          <p>Complete SSC exam preparation covering Quantitative Aptitude, English, Reasoning, and General Awareness with weekly tests, shortcuts, and time management strategies.</p>
+          <p>An exhaustive programme covering all four sections of SSC examinations — Quantitative Aptitude, English, Logical Reasoning, and General Awareness — with proven shortcut techniques and time management training.</p>
           <div class="course-subjects">
             <span class="course-subj">Quant Aptitude</span>
             <span class="course-subj">English</span>
@@ -1035,13 +1149,13 @@
           </div>
         </div>
       </div>
-      <div class="course-card reveal reveal-delay-1">
+      <div class="course-card reveal reveal-pop stagger-4">
         <div class="course-header" data-icon="🚂">
           <span class="course-tag">Railway</span>
           <h3>RRB NTPC / Group D</h3>
         </div>
         <div class="course-body">
-          <p>Target-oriented preparation for all Railway recruitment exams including NTPC and Group D, with focus on speed math, reasoning shortcuts, and exam-day strategies.</p>
+          <p>A focused, results-driven programme for Railway NTPC and Group D recruitment, emphasising rapid mental calculations, reasoning shortcuts, and high-impact exam-day strategies.</p>
           <div class="course-subjects">
             <span class="course-subj">Mathematics</span>
             <span class="course-subj">Reasoning</span>
@@ -1054,13 +1168,13 @@
           </div>
         </div>
       </div>
-      <div class="course-card reveal reveal-delay-2">
+      <div class="course-card reveal reveal-pop stagger-5">
         <div class="course-header" data-icon="🏆">
           <span class="course-tag">State Level</span>
           <h3>West Bengal State PSC</h3>
         </div>
         <div class="course-body">
-          <p>Specialized coaching for WBPSC, WBCS, and other state-level competitive examinations. Includes Bengali optional paper guidance and state-specific current affairs coverage.</p>
+          <p>Dedicated coaching for WBPSC, WBCS, and allied state-level examinations, incorporating Bengali optional paper preparation and in-depth state-specific general knowledge and current affairs.</p>
           <div class="course-subjects">
             <span class="course-subj">WBCS</span>
             <span class="course-subj">State GK</span>
@@ -1073,13 +1187,13 @@
           </div>
         </div>
       </div>
-      <div class="course-card reveal reveal-delay-3">
+      <div class="course-card reveal reveal-pop stagger-6">
         <div class="course-header" data-icon="📐">
           <span class="course-tag">Special</span>
           <h3>Mathematics Mastery</h3>
         </div>
         <div class="course-body">
-          <p>Advanced mathematics program covering topics from Class 9 to competitive exam level. Perfect for students struggling with math or wanting to ace quantitative sections.</p>
+          <p>A structured programme spanning Class 9 to advanced competitive examination level, designed for students seeking to build a strong mathematical foundation or maximise their scores in quantitative sections.</p>
           <div class="course-subjects">
             <span class="course-subj">Algebra</span>
             <span class="course-subj">Calculus</span>
@@ -1104,51 +1218,51 @@
   </div>
   <div class="container">
     <div class="text-center reveal why-header-box">
-      <div class="section-label">Why Choose Me</div>
-      <h2 class="section-title">The Sudip Ghosh Difference</h2>
-      <p class="section-desc">What makes my coaching stand apart is not just knowledge — it's the method, the mentoring, and the mindset I build in every student.</p>
+      <div class="section-label">Why Choose Us</div>
+      <h2 class="section-title">What Sets Sudip Ghosh Apart</h2>
+      <p class="section-desc">The distinction lies not merely in the depth of knowledge imparted, but in the method, the mentorship, and the mindset that is carefully cultivated within every student.</p>
     </div>
     <div class="why-grid">
-      <div class="why-card reveal reveal-delay-1">
+      <div class="why-card reveal reveal-pop stagger-1">
         <div class="why-icon wi-1"><i class="fas fa-brain"></i></div>
         <div class="why-text">
-          <h3>Concept-First Approach</h3>
-          <p>I build deep conceptual clarity so students can tackle any question pattern — not just memorize formulas. Understanding the 'why' always precedes the 'how'.</p>
+          <h3>Concept-First Pedagogy</h3>
+          <p>I cultivate deep conceptual understanding so students can confidently tackle any question pattern — not merely recall formulas. The 'why' always precedes the 'how'.</p>
         </div>
       </div>
-      <div class="why-card reveal reveal-delay-2">
+      <div class="why-card reveal reveal-pop stagger-2">
         <div class="why-icon wi-2"><i class="fas fa-user-check"></i></div>
         <div class="why-text">
-          <h3>Personalized Mentoring</h3>
-          <p>Every student is different. I analyze each student's strengths and weaknesses individually and design a personalized study plan that maximizes their potential.</p>
+          <h3>Personalised Mentoring</h3>
+          <p>Every student is unique. I conduct individual assessments of strengths and areas for improvement, then craft a bespoke study roadmap engineered to maximise each student's potential.</p>
         </div>
       </div>
-      <div class="why-card reveal reveal-delay-3">
+      <div class="why-card reveal reveal-pop stagger-3">
         <div class="why-icon wi-3"><i class="fas fa-clipboard-list"></i></div>
         <div class="why-text">
-          <h3>Regular Mock Tests & Analysis</h3>
-          <p>Weekly mock tests followed by detailed performance analysis help students track progress, identify gaps, and improve continuously with each attempt.</p>
+          <h3>Rigorous Mock Testing &amp; Analysis</h3>
+          <p>Structured weekly mock examinations, followed by detailed performance debriefs, enable students to track growth precisely, identify skill gaps, and iterate continuously towards mastery.</p>
         </div>
       </div>
-      <div class="why-card reveal reveal-delay-4">
+      <div class="why-card reveal reveal-pop stagger-4">
         <div class="why-icon wi-4"><i class="fas fa-comments"></i></div>
         <div class="why-text">
-          <h3>Daily Doubt Clearing Sessions</h3>
-          <p>No doubt goes unanswered. Dedicated daily sessions ensure every student's confusion is resolved before it becomes a barrier to their progress.</p>
+          <h3>Daily Doubt Resolution Sessions</h3>
+          <p>No question remains unanswered. Dedicated daily sessions ensure that every conceptual difficulty is addressed and resolved before it can impede a student's progress.</p>
         </div>
       </div>
-      <div class="why-card reveal reveal-delay-1">
+      <div class="why-card reveal reveal-pop stagger-5">
         <div class="why-icon wi-5"><i class="fas fa-book-open"></i></div>
         <div class="why-text">
-          <h3>Curated Study Materials</h3>
-          <p>Handpicked and self-authored study materials, cheat sheets, formula books, and PYQ compilations — all optimized for exam relevance and time efficiency.</p>
+          <h3>Curated Study Resources</h3>
+          <p>Handpicked and self-authored study materials, formula reference sheets, and Previous Year Question compilations — all meticulously optimised for maximum exam relevance and time efficiency.</p>
         </div>
       </div>
-      <div class="why-card reveal reveal-delay-2">
+      <div class="why-card reveal reveal-pop stagger-6">
         <div class="why-icon wi-6"><i class="fas fa-heart"></i></div>
         <div class="why-text">
-          <h3>Motivation & Mental Support</h3>
-          <p>Competitive exam preparation is mentally challenging. I provide continuous motivation, stress management techniques, and emotional support through the journey.</p>
+          <h3>Holistic Motivation &amp; Mental Wellness</h3>
+          <p>Competitive examination preparation is as much a mental endeavour as an academic one. I provide continuous motivation, evidence-based stress management strategies, and empathetic support throughout every student's journey.</p>
         </div>
       </div>
     </div>
@@ -1159,18 +1273,18 @@
 <section id="reviews">
   <div class="container">
     <div class="text-center reveal">
-      <div class="section-label">Student Reviews</div>
-      <h2 class="section-title">Words From My Students</h2>
-      <p class="section-desc">These aren't just testimonials — they're stories of transformation, determination, and achievement from real students who changed their lives.</p>
+      <div class="section-label">Student Testimonials</div>
+      <h2 class="section-title">Voices of Transformation</h2>
+      <p class="section-desc">More than testimonials — these are accounts of dedication, perseverance, and extraordinary achievement by students who chose to invest in themselves and emerged triumphant.</p>
     </div>
     <div class="reviews-grid">
 
-      <div class="review-card reveal reveal-delay-1">
+      <div class="review-card reveal reveal-pop stagger-1">
         <div class="review-stars">
           <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
           <i class="fas fa-star"></i><i class="fas fa-star"></i>
         </div>
-        <p class="review-text">"Sudip Sir's way of teaching Mathematics for JEE is simply unmatched. I went from scoring 40 marks to 180 in Mathematics in just 8 months. His dedication to every student is what makes him special. I got AIR 847 in JEE Advanced!"</p>
+        <p class="review-text">"Sudip Sir's approach to Mathematics for JEE is truly exceptional. Under his guidance, my score improved from 40 to 180 in just eight months. His unwavering commitment to every student's success is what makes him genuinely extraordinary. I secured AIR 847 in JEE Advanced."</p>
         <div class="review-author">
           <div class="author-avatar" style="background: linear-gradient(135deg, #667eea, #764ba2);">AR</div>
           <div class="author-info">
@@ -1181,12 +1295,12 @@
         </div>
       </div>
 
-      <div class="review-card reveal reveal-delay-2">
+      <div class="review-card reveal reveal-pop stagger-2">
         <div class="review-stars">
           <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
           <i class="fas fa-star"></i><i class="fas fa-star"></i>
         </div>
-        <p class="review-text">"I had failed UPSC Prelims twice before joining Sir's batch. The structured approach, daily current affairs sessions, and Sir's personal guidance completely changed my preparation. I cleared UPSC CSE 2023 in my third attempt with Rank 142!"</p>
+        <p class="review-text">"Having failed the UPSC Prelims twice, I was disheartened when I joined Sir's batch. The structured curriculum, daily current affairs sessions, and Sir's personal mentorship entirely transformed my preparation strategy. I cleared UPSC CSE 2023 on my third attempt, securing Rank 142."</p>
         <div class="review-author">
           <div class="author-avatar" style="background: linear-gradient(135deg, #f093fb, #f5576c);">PD</div>
           <div class="author-info">
@@ -1197,12 +1311,12 @@
         </div>
       </div>
 
-      <div class="review-card reveal reveal-delay-3">
+      <div class="review-card reveal reveal-pop stagger-3">
         <div class="review-stars">
           <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
           <i class="fas fa-star"></i><i class="fas fa-star"></i>
         </div>
-        <p class="review-text">"Sir's shortcut techniques for SSC Math saved me so much time during the exam. I never thought I could crack SSC CGL in my first attempt, but with his coaching and discipline, I did. Got posted as Tax Assistant in Income Tax Department!"</p>
+        <p class="review-text">"Sir's powerful shortcut techniques for SSC Mathematics saved me invaluable time during the examination. I had never imagined clearing SSC CGL on my very first attempt — yet with his structured coaching and disciplined approach, I did. I am now proudly serving as a Tax Assistant in the Income Tax Department."</p>
         <div class="review-author">
           <div class="author-avatar" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">RS</div>
           <div class="author-info">
@@ -1213,12 +1327,12 @@
         </div>
       </div>
 
-      <div class="review-card reveal reveal-delay-1">
+      <div class="review-card reveal reveal-pop stagger-4">
         <div class="review-stars">
           <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
           <i class="fas fa-star"></i><i class="fas fa-star"></i>
         </div>
-        <p class="review-text">"The Railway NTPC batch was incredibly well-structured. Sir covered every topic systematically and the weekly mock tests with detailed analysis helped me identify my weak areas quickly. Selected as Station Master, got my dream job!"</p>
+        <p class="review-text">"The Railway NTPC batch was exceptionally well-structured. Sir covered every topic methodically, and the weekly mock tests with comprehensive performance analysis allowed me to identify and address my weaknesses with precision. I was selected as Station Master — a dream come true."</p>
         <div class="review-author">
           <div class="author-avatar" style="background: linear-gradient(135deg, #43e97b, #38f9d7);">SM</div>
           <div class="author-info">
@@ -1229,12 +1343,12 @@
         </div>
       </div>
 
-      <div class="review-card reveal reveal-delay-2">
+      <div class="review-card reveal reveal-pop stagger-5">
         <div class="review-stars">
           <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
           <i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
         </div>
-        <p class="review-text">"WBCS coaching under Sudip Sir was phenomenal. His knowledge of state-level syllabus, local current affairs, and interview preparation made all the difference. I cleared WBCS Group A in 2023. Forever grateful to him!"</p>
+        <p class="review-text">"WBCS coaching under Sudip Sir was truly phenomenal. His mastery of the state-level syllabus, local current affairs, and interview preparation strategy made a decisive difference in my performance. I cleared WBCS Group A in 2023, and I remain forever grateful for his mentorship."</p>
         <div class="review-author">
           <div class="author-avatar" style="background: linear-gradient(135deg, #fa709a, #fee140);">KC</div>
           <div class="author-info">
@@ -1245,12 +1359,12 @@
         </div>
       </div>
 
-      <div class="review-card reveal reveal-delay-3">
+      <div class="review-card reveal reveal-pop stagger-6">
         <div class="review-stars">
           <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
           <i class="fas fa-star"></i><i class="fas fa-star"></i>
         </div>
-        <p class="review-text">"I joined the Mathematics Mastery course being completely weak in math. Sir's patient teaching approach, the way he explains every concept from scratch, and the daily practice problems transformed me. Now I'm confident facing any math question!"</p>
+        <p class="review-text">"I enrolled in the Mathematics Mastery programme with extremely weak foundational skills. Sir's patient, methodical approach — building every concept from the ground up and reinforcing it through daily practice — completely transformed my relationship with mathematics. I can now confidently approach any problem."</p>
         <div class="review-author">
           <div class="author-avatar" style="background: linear-gradient(135deg, #a18cd1, #fbc2eb);">TB</div>
           <div class="author-info">
@@ -1269,50 +1383,50 @@
 <section id="achievements">
   <div class="container">
     <div class="text-center reveal">
-      <div class="section-label">Milestones</div>
-      <h2 class="section-title">Achievements & Recognition</h2>
-      <p class="section-desc">A journey of 14 years marked by awards, recognition, and most importantly — thousands of student success stories.</p>
+      <div class="section-label">Achievements &amp; Milestones</div>
+      <h2 class="section-title">Honours &amp; Achievements</h2>
+      <p class="section-desc">Fourteen years of dedicated service to education, marked by distinguished awards, institutional recognition, and thousands of student success stories that define a legacy of excellence.</p>
     </div>
     <div class="ach-grid">
-      <div class="ach-card reveal reveal-delay-1">
+      <div class="ach-card reveal reveal-pop stagger-1">
         <div class="ach-trophy">🥇</div>
         <h3>Best Educator Award</h3>
-        <p>Bengal Teachers Forum 2022 — Recognized for outstanding contribution to competitive exam education</p>
+        <p>Bengal Teachers Forum 2022 — Awarded for outstanding and transformative contributions to competitive examination education across West Bengal.</p>
       </div>
-      <div class="ach-card reveal reveal-delay-2">
+      <div class="ach-card reveal reveal-pop stagger-2">
         <div class="ach-trophy">📚</div>
         <h3>Published Author</h3>
-        <p>Author of 3 Mathematics practice guides — widely used by SSC and State PSC aspirants across Bengal</p>
+        <p>Author of three authoritative Mathematics practice guides, widely adopted by SSC and State PSC aspirants across West Bengal for their depth and examination relevance.</p>
       </div>
-      <div class="ach-card reveal reveal-delay-3">
+      <div class="ach-card reveal reveal-pop stagger-3">
         <div class="ach-trophy">🎖️</div>
         <h3>Excellence in Teaching</h3>
-        <p>Education Innovation Council 2021 — For innovative pedagogy in competitive examination coaching</p>
+        <p>Education Innovation Council 2021 — Recognised for pioneering pedagogical innovation in competitive examination coaching and student outcome improvement.</p>
       </div>
-      <div class="ach-card reveal reveal-delay-4">
+      <div class="ach-card reveal reveal-pop stagger-4">
         <div class="ach-trophy">📺</div>
         <h3>Media Recognition</h3>
-        <p>Featured in ABP Ananda and Zee 24 Ghanta for exceptional student results in state-level competitive exams</p>
+        <p>Featured on ABP Ananda and Zee 24 Ghanta for delivering exceptional student outcomes in state-level and national competitive examinations.</p>
       </div>
-      <div class="ach-card reveal reveal-delay-1">
+      <div class="ach-card reveal reveal-pop stagger-5">
         <div class="ach-trophy">🌐</div>
         <h3>Online Reach</h3>
-        <p>50,000+ students reached through YouTube lectures, free webinars, and digital study materials</p>
+        <p>Over 50,000 students reached through YouTube lectures, free webinars, and complimentary digital study resources — making quality education accessible to all.</p>
       </div>
-      <div class="ach-card reveal reveal-delay-2">
+      <div class="ach-card reveal reveal-pop stagger-6">
         <div class="ach-trophy">🤝</div>
         <h3>Community Initiative</h3>
-        <p>Free coaching program for economically weaker students — 200+ scholarships awarded since 2018</p>
+        <p>Pro bono coaching initiative for economically disadvantaged students — over 200 full scholarships awarded since 2018, ensuring opportunity is never limited by circumstance.</p>
       </div>
-      <div class="ach-card reveal reveal-delay-3">
+      <div class="ach-card reveal reveal-pop stagger-1">
         <div class="ach-trophy">🏫</div>
         <h3>Partnered Institutions</h3>
-        <p>Collaborated with 5+ reputed coaching centers in Kolkata for curriculum development and workshops</p>
+        <p>Strategic collaborations with five or more prestigious coaching institutions across Kolkata for joint curriculum development, faculty workshops, and academic excellence programmes.</p>
       </div>
-      <div class="ach-card reveal reveal-delay-4">
+      <div class="ach-card reveal reveal-pop stagger-2">
         <div class="ach-trophy">⭐</div>
         <h3>4.9★ Avg. Rating</h3>
-        <p>Consistently rated 4.9 out of 5 by students across all batches — testimony to quality teaching</p>
+        <p>Consistently rated 4.9 out of 5 by students across all batches — a testament to uncompromising teaching quality and genuine student satisfaction.</p>
       </div>
     </div>
   </div>
@@ -1322,15 +1436,15 @@
 <section id="contact">
   <div class="container">
     <div class="contact-grid">
-      <div class="contact-left reveal">
-        <div class="section-label" style="color: rgba(255,255,255,0.6);">Get In Touch</div>
-        <h2 class="section-title">Ready to Start Your<br/>Success Journey?</h2>
-        <p class="section-desc">Fill in the form and I'll personally reach out to discuss how I can help you achieve your exam goals. Limited seats available — enroll today!</p>
+      <div class="contact-left reveal reveal-left">
+        <div class="section-label" style="color: rgba(255,255,255,0.6);">Begin Your Journey</div>
+        <h2 class="section-title">Ready to Realise Your<br/>Full Potential?</h2>
+        <p class="section-desc">Complete the form below and I will personally connect with you to discuss how we can chart your path to examination success. Seats are strictly limited — take the first step today.</p>
         <div class="contact-info">
           <div class="contact-item">
             <div class="contact-item-icon"><i class="fas fa-phone"></i></div>
             <div class="contact-item-info">
-              <h4>Phone / WhatsApp</h4>
+              <h4>Phone &amp; WhatsApp</h4>
               <p>+91 98300 XXXXX</p>
             </div>
           </div>
@@ -1357,15 +1471,15 @@
           </div>
         </div>
       </div>
-      <div class="contact-right reveal reveal-delay-2">
+      <div class="contact-right reveal reveal-right reveal-delay-2">
         <form class="contact-form" onsubmit="handleSubmit(event)">
           <div class="form-row">
             <div class="form-group">
-              <label>Full Name *</label>
+              <label>Full Name <span style="color:var(--accent)">*</span></label>
               <input type="text" placeholder="Your full name" required />
             </div>
             <div class="form-group">
-              <label>Phone Number *</label>
+              <label>Phone Number <span style="color:var(--accent)">*</span></label>
               <input type="tel" placeholder="+91 XXXXX XXXXX" required />
             </div>
           </div>
@@ -1374,7 +1488,7 @@
             <input type="email" placeholder="your@email.com" />
           </div>
           <div class="form-group">
-            <label>Program Interested In *</label>
+            <label>Program of Interest <span style="color:var(--accent)">*</span></label>
             <select required>
               <option value="">Select a program...</option>
               <option>IIT-JEE Foundation & Advanced</option>
@@ -1386,11 +1500,11 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Message / Query</label>
-            <textarea placeholder="Tell me about your exam goal and current preparation level..."></textarea>
+            <label>Message or Query</label>
+            <textarea placeholder="Tell us about your examination goal and your current level of preparation..."></textarea>
           </div>
           <button type="submit" class="btn-submit">
-            <i class="fas fa-paper-plane"></i> Send Enquiry
+            <i class="fas fa-paper-plane"></i> Submit Enquiry
           </button>
         </form>
       </div>
@@ -1410,7 +1524,7 @@
             <span>Expert Educator</span>
           </div>
         </div>
-        <p>Empowering students across West Bengal to crack India's most prestigious competitive examinations through dedicated coaching, smart strategies, and personalized mentoring since 2010.</p>
+        <p>Empowering students across West Bengal to excel in India's most prestigious competitive examinations through dedicated coaching, proven strategies, and personalised mentoring — since 2010.</p>
         <div class="footer-social">
           <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
           <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
@@ -1480,10 +1594,19 @@
   function closeMobileNav() { document.getElementById('mobileNav').classList.remove('open'); }
 
   /* ---- SCROLL REVEAL ---- */
-  const revealEls = document.querySelectorAll('.reveal');
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-pop');
   const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // Shimmer effect on section titles when their parent reveals
+        const title = e.target.querySelector('.section-title');
+        if (title && !title.classList.contains('shimmer-once')) {
+          setTimeout(() => title.classList.add('shimmer-once'), 200);
+        }
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
   revealEls.forEach(el => revealObserver.observe(el));
 
   /* ---- COUNTER ANIMATION ---- */
