@@ -2045,7 +2045,7 @@
     const initials = getStudentInitials(data.name);
 
     const card = document.createElement('div');
-    card.className = `review-card ${isNew ? 'newly-added-review' : 'reveal reveal-pop'}`;
+    card.className = `review-card ${isNew ? 'newly-added-review' : ''}`;
     const cleanId = `${data.name}-${data.badge}`.toLowerCase().replace(/[^a-z0-9]/g, '');
     card.setAttribute('data-review-id', cleanId);
     card.innerHTML = `
