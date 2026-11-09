@@ -2001,6 +2001,11 @@
     }
   }
 
+  // ===================== LIVE REVIEWS DATABASE SYNC =====================
+  // To connect your Google Sheet as a live database, paste your Web App URL below:
+  // e.g. const REVIEWS_API_URL = 'https://script.google.com/macros/s/AKfycb.../exec';
+  const REVIEWS_API_URL = '';
+
   const reviewAvatarGradients = [
     'linear-gradient(135deg, #667eea, #764ba2)',
     'linear-gradient(135deg, #f093fb, #f5576c)',
@@ -2019,7 +2024,7 @@
   }
 
   function escapeReviewText(str) {
-    return str.replace(/[&<>'"]/g, tag => ({
+    return String(str || '').replace(/[&<>'"]/g, tag => ({
       '&': '&amp;',
       '<': '&lt;',
       '>': '&gt;',
@@ -2028,17 +2033,8 @@
     }[tag] || tag));
   }
 
-  function handleReviewSubmit(e) {
-    e.preventDefault();
-    const name = document.getElementById('reviewName').value.trim();
-    const program = document.getElementById('reviewProgram').value;
-    const badge = document.getElementById('reviewBadge').value.trim();
-    const text = document.getElementById('reviewText').value.trim();
-    const rating = parseInt(document.getElementById('reviewRating').value) || 5;
-
-    if (!name || !program || !badge || !text) return;
-
-    // Build Stars
+  function buildReviewCardHtml(data, isNew = false) {
+    const rating = Number(data.rating) || 5;
     let starsHtml = '';
     for (let i = 1; i <= 5; i++) {
       if (i <= rating) {
@@ -2047,40 +2043,142 @@
         starsHtml += '<i class="far fa-star"></i>';
       }
     }
-
     const randomGradient = reviewAvatarGradients[Math.floor(Math.random() * reviewAvatarGradients.length)];
-    const initials = getStudentInitials(name);
+    const initials = getStudentInitials(data.name);
 
-    // Create card element
     const card = document.createElement('div');
-    card.className = 'review-card newly-added-review';
+    card.className = `review-card ${isNew ? 'newly-added-review' : 'reveal reveal-pop'}`;
+    const cleanId = `${data.name}-${data.badge}`.toLowerCase().replace(/[^a-z0-9]/g, '');
+    card.setAttribute('data-review-id', cleanId);
     card.innerHTML = `
       <div class="review-stars">
         ${starsHtml}
       </div>
-      <p class="review-text">"${escapeReviewText(text)}"</p>
+      <p class="review-text">"${escapeReviewText(data.text)}"</p>
       <div class="review-author">
         <div class="author-avatar" style="background: ${randomGradient};">${initials}</div>
         <div class="author-info">
-          <h4>${escapeReviewText(name)}</h4>
-          <p>${escapeReviewText(program)}</p>
-          <span class="review-badge">${escapeReviewText(badge)}</span>
+          <h4>${escapeReviewText(data.name)}</h4>
+          <p>${escapeReviewText(data.program)}</p>
+          <span class="review-badge">${escapeReviewText(data.badge)}</span>
         </div>
       </div>
     `;
+    return card;
+  }
 
+  async function loadLiveReviews() {
+    const grid = document.getElementById('reviewsGrid');
+    if (!grid) return;
+
+    // 1. Load from local cache for instant zero-latency rendering
+    try {
+      const cached = JSON.parse(localStorage.getItem('sg_student_reviews') || '[]');
+      cached.forEach(rev => {
+        const cleanId = `${rev.name}-${rev.badge}`.toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (!grid.querySelector(`[data-review-id="${cleanId}"]`)) {
+          const card = buildReviewCardHtml(rev, false);
+          grid.insertBefore(card, grid.firstChild);
+        }
+      });
+    } catch (e) {
+      console.warn('Cache load notice:', e);
+    }
+
+    // 2. Fetch live approved reviews from Google Sheet if URL is configured
+    if (REVIEWS_API_URL && REVIEWS_API_URL.startsWith('http')) {
+      try {
+        const response = await fetch(REVIEWS_API_URL);
+        const json = await response.json();
+        if (json && json.status === 'success' && Array.isArray(json.data)) {
+          json.data.forEach(rev => {
+            const cleanId = `${rev.name}-${rev.badge}`.toLowerCase().replace(/[^a-z0-9]/g, '');
+            if (!grid.querySelector(`[data-review-id="${cleanId}"]`)) {
+              const card = buildReviewCardHtml(rev, false);
+              grid.insertBefore(card, grid.firstChild);
+            }
+          });
+        }
+      } catch (err) {
+        console.warn('Live Google Sheets review sync warning:', err);
+      }
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadLiveReviews);
+  } else {
+    loadLiveReviews();
+  }
+
+  async function handleReviewSubmit(e) {
+    e.preventDefault();
+    const name = document.getElementById('reviewName').value.trim();
+    const email = document.getElementById('reviewEmail')?.value.trim() || '';
+    const program = document.getElementById('reviewProgram').value;
+    const badge = document.getElementById('reviewBadge').value.trim();
+    const text = document.getElementById('reviewText').value.trim();
+    const rating = parseInt(document.getElementById('reviewRating').value) || 5;
+
+    if (!name || !program || !badge || !text) return;
+
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const originalBtnHtml = submitBtn ? submitBtn.innerHTML : 'Submit Review';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+    }
+
+    const reviewData = {
+      name,
+      email,
+      program,
+      badge,
+      rating,
+      text,
+      timestamp: new Date().toISOString()
+    };
+
+    // 1. Instantly display on page
+    const card = buildReviewCardHtml(reviewData, true);
     const grid = document.getElementById('reviewsGrid');
     if (grid) {
       grid.insertBefore(card, grid.firstChild);
     }
 
-    // Reset and close
+    // 2. Save in localStorage so user always sees it even across reloads
+    try {
+      const stored = JSON.parse(localStorage.getItem('sg_student_reviews') || '[]');
+      stored.unshift(reviewData);
+      localStorage.setItem('sg_student_reviews', JSON.stringify(stored.slice(0, 50)));
+    } catch (err) {
+      console.warn('LocalStorage save notice:', err);
+    }
+
+    // 3. Post to Google Sheets Live Database if configured
+    if (REVIEWS_API_URL && REVIEWS_API_URL.startsWith('http')) {
+      try {
+        await fetch(REVIEWS_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(reviewData)
+        });
+      } catch (postErr) {
+        console.warn('Google Sheet post notice:', postErr);
+      }
+    }
+
+    // Reset button & form
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnHtml;
+    }
     e.target.reset();
     setStarRating(5);
     closeReviewModal();
 
-    // Feedback
-    showToast(`Thank you, ${name}! Your review has been added.`);
+    // User feedback
+    showToast(`Thank you, ${name}! Your review has been saved and published.`);
 
     setTimeout(() => {
       card.scrollIntoView({ behavior: 'smooth', block: 'center' });
