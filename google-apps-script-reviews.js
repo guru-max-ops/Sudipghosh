@@ -4,33 +4,26 @@
  * ============================================================================
  * 
  * SPREADSHEET LINKED:
- * https://docs.google.com/spreadsheets/d/1sblY4YXl47ZQFRWRFC5_MC5ncF4JOH14Fz7qCM0Tuqw/edit
+ * https://docs.google.com/spreadsheets/d/1sbIY4YXl4Z2QF8WREC5_MC5ncE4JOH14Fz7qCM0Tuqw/edit
  * 
  * EASY SETUP INSTRUCTIONS (~1-2 minutes):
- * 1. Open a new tab and go directly to: https://script.new
- * 2. Delete any existing code in the editor, and paste THIS ENTIRE FILE.
- * 3. Click the "Save" (disk) icon at the top.
- * 4. Click the blue "Deploy" button at the top right -> Choose "New deployment".
- * 5. Click the Gear icon next to "Select type" -> Select "Web app".
- * 6. Set the following:
- *      - Description: "Sudip Ghosh Student Reviews API"
- *      - Execute as: "Me"
- *      - Who has access: "Anyone"  <-- CRITICAL: Allows public visitors to view & post reviews!
- * 7. Click "Deploy".
- *    (If asked to authorize: Click "Authorize Access" -> choose your Google account -> "Advanced" -> "Go to Untitled project (unsafe)" -> "Allow").
- * 8. Copy the "Web app URL" (starts with https://script.google.com/macros/s/.../exec).
- * 9. Send that URL here!
+ * 1. Open your Apps Script tab.
+ * 2. Delete existing code and paste THIS ENTIRE FILE.
+ * 3. Click Save (Ctrl+S).
+ * 4. Click Deploy -> Manage deployments -> Click the pencil icon next to active deployment.
+ * 5. Under "Version", choose "New version" -> Click "Deploy".
  * ============================================================================
  */
 
-const TARGET_SPREADSHEET_ID = '1sblY4YXl47ZQFRWRFC5_MC5ncF4JOH14Fz7qCM0Tuqw';
+const TARGET_SPREADSHEET_ID = '1sbIY4YXl4Z2QF8WREC5_MC5ncE4JOH14Fz7qCM0Tuqw';
 
 function getSheet() {
   if (TARGET_SPREADSHEET_ID) {
     try {
       return SpreadsheetApp.openById(TARGET_SPREADSHEET_ID).getActiveSheet();
     } catch (e) {
-      // Fallback to active spreadsheet if bound
+      Logger.log("openById error: " + e.toString());
+      throw new Error("Could not open spreadsheet with ID " + TARGET_SPREADSHEET_ID + ": " + e.message);
     }
   }
   return SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
