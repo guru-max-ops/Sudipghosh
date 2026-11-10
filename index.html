@@ -604,51 +604,253 @@
     .stat-sub { font-size: 0.78rem; color: #36587c; margin-top: 4px; font-weight: 500; }
 
     /* ===================== COURSES / EXAMS ===================== */
-    #courses { background: var(--white); }
+    #courses { background: #fbfcfe; position: relative; }
+    
+    /* Category Filter Tabs */
+    .course-filter-wrap {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 36px auto 10px;
+      max-width: 860px;
+    }
+    .filter-btn {
+      background: var(--white);
+      border: 1px solid var(--border);
+      color: var(--text-mid);
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 9px 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(.4,0,.2,1);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(26,60,94,0.04);
+    }
+    .filter-btn:hover {
+      border-color: var(--accent2);
+      color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(26,60,94,0.08);
+    }
+    .filter-btn.active {
+      background: linear-gradient(135deg, var(--primary), var(--accent2));
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 4px 16px rgba(26,60,94,0.22);
+    }
+    .filter-btn .filter-count {
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      background: rgba(255,255,255,0.24);
+      color: #fff;
+    }
+    .filter-btn:not(.active) .filter-count {
+      background: var(--light-bg);
+      color: var(--text-light);
+    }
+
     .courses-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 48px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 36px;
     }
     .course-card {
-      background: var(--card-bg); border-radius: var(--radius);
-      border: 1px solid var(--border); overflow: hidden;
-      box-shadow: var(--shadow); transition: transform var(--transition), box-shadow var(--transition);
-      display: flex; flex-direction: column;
+      background: var(--card-bg);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(26,60,94,0.06);
+      transition: transform 0.35s cubic-bezier(.34,1.56,.64,1), box-shadow 0.35s ease, border-color 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      position: relative;
     }
-    .course-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+    .course-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 48px rgba(26,60,94,0.14);
+      border-color: rgba(46, 125, 159, 0.4);
+    }
+
     .course-header {
-      padding: 28px 28px 20px;
-      background: linear-gradient(135deg, var(--primary), var(--accent2));
-      position: relative; overflow: hidden;
+      padding: 24px 24px 20px;
+      background: linear-gradient(135deg, #102942 0%, #1c4b72 100%);
+      position: relative;
+      overflow: hidden;
+      border-bottom: 3px solid var(--accent);
     }
-    .course-header::after {
-      content: attr(data-icon); position: absolute; right: 20px; top: 50%;
-      transform: translateY(-50%);
-      font-size: 3.5rem; opacity: 0.15;
+    .course-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+    .course-icon-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.45rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
     }
     .course-tag {
-      display: inline-block; background: var(--accent);
-      color: var(--primary); font-size: 0.72rem; font-weight: 700;
-      padding: 4px 12px; border-radius: 50px; margin-bottom: 10px;
-      letter-spacing: 0.06em; text-transform: uppercase;
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 50px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(232, 160, 32, 0.3);
     }
     .course-header h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.4rem; font-weight: 800; color: #fff; line-height: 1.2;
+      font-size: 1.32rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.28;
+      position: relative;
+      z-index: 1;
     }
-    .course-body { padding: 24px 28px; flex: 1; display: flex; flex-direction: column; }
-    .course-body p { color: var(--text-mid); font-size: 0.93rem; line-height: 1.75; margin-bottom: 20px; flex: 1; }
-    .course-subjects { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .course-header::after {
+      content: attr(data-icon);
+      position: absolute;
+      right: -10px;
+      bottom: -15px;
+      font-size: 5.2rem;
+      opacity: 0.09;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .course-body {
+      padding: 22px 24px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .course-body p {
+      color: var(--text-mid);
+      font-size: 0.91rem;
+      line-height: 1.68;
+      margin-bottom: 16px;
+    }
+    .course-subjects-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+    .course-subjects {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
     .course-subj {
-      background: var(--light-bg); color: var(--text-dark);
-      font-size: 0.78rem; font-weight: 500; padding: 4px 12px; border-radius: 50px;
+      background: var(--light-bg);
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid #e1e8f0;
+      transition: var(--transition);
+    }
+    .course-card:hover .course-subj {
+      border-color: rgba(46, 125, 159, 0.3);
+      background: #eef4fb;
+    }
+
+    .course-perks {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-top: auto;
+      margin-bottom: 18px;
+      padding: 12px 14px;
+      background: #f7f9fc;
+      border-radius: 10px;
       border: 1px solid var(--border);
     }
-    .course-meta {
-      display: flex; justify-content: space-between; align-items: center;
-      padding-top: 16px; border-top: 1px solid var(--border);
+    .course-perk {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      color: var(--text-mid);
+      font-weight: 500;
     }
-    .course-meta span { font-size: 0.82rem; color: var(--text-light); display: flex; align-items: center; gap: 5px; }
-    .course-meta i { color: var(--accent); }
+    .course-perk i {
+      color: #27ae60;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    /* Course Footer / Action Bar */
+    .course-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .course-delivery {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.77rem;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+    .course-delivery i {
+      color: var(--accent2);
+    }
+    .btn-course-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, var(--primary), var(--accent2));
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: var(--transition);
+      box-shadow: 0 2px 10px rgba(26,60,94,0.18);
+    }
+    .btn-course-cta:hover {
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(232, 160, 32, 0.35);
+    }
+    .btn-course-cta i {
+      font-size: 0.75rem;
+      transition: transform var(--transition);
+    }
+    .btn-course-cta:hover i {
+      transform: translateX(3px);
+    }
 
     /* ===================== WHY CHOOSE ===================== */
     #why { background: var(--light-bg); }
@@ -1401,11 +1603,14 @@
 
       /* Courses Section */
       #courses { padding: 48px 14px; }
-      .section-title { font-size: 1.65rem; }
-      .section-desc { font-size: 0.88rem; line-height: 1.65; }
-      .courses-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 24px; }
-      .course-card { padding: 20px 16px; border-radius: 16px; }
-      .course-header h3 { font-size: 1.2rem; }
+      .course-filter-wrap { gap: 6px; margin: 20px 0 12px; }
+      .filter-btn { font-size: 0.78rem; padding: 7px 14px; }
+      .courses-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 20px; }
+      .course-card { border-radius: 18px; padding: 0 !important; }
+      .course-header { padding: 18px 18px 16px; }
+      .course-header h3 { font-size: 1.18rem; }
+      .course-body { padding: 18px 16px; }
+      .course-footer { flex-direction: row; justify-content: space-between; }
 
       /* Why Section */
       #why { padding: 48px 14px; }
@@ -1686,151 +1891,68 @@
       <div class="section-label">Our Programs</div>
       <h2 class="section-title">Specialised Coaching Programs</h2>
       <p class="section-desc">Meticulously designed programs that equip students with the knowledge, strategy, and mindset required to excel in India's most competitive examinations.</p>
+      
+      <!-- Category Filter Tabs -->
+      <div class="course-filter-wrap">
+        <button type="button" class="filter-btn active" onclick="filterCourses('all', this)">
+          All Programs <span class="filter-count">8</span>
+        </button>
+        <button type="button" class="filter-btn" onclick="filterCourses('engineering-medical', this)">
+          Engineering &amp; Medical <span class="filter-count">2</span>
+        </button>
+        <button type="button" class="filter-btn" onclick="filterCourses('civil-govt', this)">
+          Civil &amp; Govt. Exams <span class="filter-count">4</span>
+        </button>
+        <button type="button" class="filter-btn" onclick="filterCourses('management-math', this)">
+          Management &amp; Math <span class="filter-count">2</span>
+        </button>
+      </div>
     </div>
-    <div class="courses-grid">
-      <div class="course-card reveal reveal-pop stagger-1">
+
+    <div class="courses-grid" id="coursesGrid">
+      <!-- 1. IIT-JEE -->
+      <div class="course-card reveal reveal-pop stagger-1" data-category="engineering-medical">
         <div class="course-header" data-icon="🎯">
-          <span class="course-tag">Most Popular</span>
-          <h3>IIT-JEE Foundation & Advanced</h3>
+          <div class="course-header-top">
+            <div class="course-icon-badge">🎯</div>
+            <span class="course-tag">Most Popular</span>
+          </div>
+          <h3>IIT-JEE Foundation &amp; Advanced</h3>
         </div>
         <div class="course-body">
-          <p>A rigorous two-year programme for IIT-JEE Mains and Advanced aspirants in Classes 11 & 12, integrating deep concept development, strategic mock testing, and intensive problem-solving to build exam-ready confidence.</p>
+          <p>A rigorous, concept-driven programme for IIT-JEE Mains and Advanced aspirants, integrating deep mathematical and physical principles, strategic mock testing, and intensive problem-solving to build exam-day confidence.</p>
+          <div class="course-subjects-title">Core Focus Areas</div>
           <div class="course-subjects">
             <span class="course-subj">Mathematics</span>
             <span class="course-subj">Physics</span>
-            <span class="course-subj">Chemistry</span>
-            <span class="course-subj">Mock Tests</span>
-            <span class="course-subj">PYQs</span>
+            <span class="course-subj">Problem Solving</span>
+            <span class="course-subj">Full Mocks</span>
+            <span class="course-subj">PYQ Drills</span>
           </div>
-          <div class="course-meta">
-            <span><i class="fas fa-clock"></i> 2-Year Program</span>
-            <span><i class="fas fa-users"></i> Batch: 20 Students</span>
+          <div class="course-perks">
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Deep First-Principles Theory &amp; Shortcuts</div>
+            <div class="course-perk"><i class="fas fa-check-circle"></i> 15+ Years JEE Mains &amp; Advanced PYQs</div>
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Weekly Test Analysis &amp; Speed Optimization</div>
           </div>
-        </div>
-      </div>
-      <div class="course-card reveal reveal-pop stagger-2">
-        <div class="course-header" data-icon="🏛️">
-          <span class="course-tag">Govt. Exams</span>
-          <h3>UPSC Civil Services Prep</h3>
-        </div>
-        <div class="course-body">
-          <p>A comprehensive preparation programme covering all three stages — Prelims, Mains, and Interview — with extensive subject coverage, structured answer-writing workshops, and consistent one-on-one mentoring.</p>
-          <div class="course-subjects">
-            <span class="course-subj">GS Paper I-IV</span>
-            <span class="course-subj">Essay Writing</span>
-            <span class="course-subj">Current Affairs</span>
-            <span class="course-subj">Interview Prep</span>
-          </div>
-          <div class="course-meta">
-            <span><i class="fas fa-clock"></i> 1-Year Program</span>
-            <span><i class="fas fa-users"></i> Batch: 15 Students</span>
+          <div class="course-footer">
+            <div class="course-delivery"><i class="fas fa-chalkboard-teacher"></i> <span>Classroom &amp; Online</span></div>
+            <a href="#contact" class="btn-course-cta" onclick="selectCourse('IIT-JEE Foundation & Advanced')">Enroll Now <i class="fas fa-arrow-right"></i></a>
           </div>
         </div>
       </div>
-      <div class="course-card reveal reveal-pop stagger-3">
-        <div class="course-header" data-icon="📋">
-          <span class="course-tag">Central Govt</span>
-          <h3>SSC CGL / CHSL / MTS</h3>
-        </div>
-        <div class="course-body">
-          <p>An exhaustive programme covering all four sections of SSC examinations — Quantitative Aptitude, English, Logical Reasoning, and General Awareness — with proven shortcut techniques and time management training.</p>
-          <div class="course-subjects">
-            <span class="course-subj">Quant Aptitude</span>
-            <span class="course-subj">English</span>
-            <span class="course-subj">Reasoning</span>
-            <span class="course-subj">General Awareness</span>
-          </div>
-          <div class="course-meta">
-            <span><i class="fas fa-clock"></i> 6-Month Program</span>
-            <span><i class="fas fa-users"></i> Batch: 25 Students</span>
-          </div>
-        </div>
-      </div>
-      <div class="course-card reveal reveal-pop stagger-4">
-        <div class="course-header" data-icon="🚂">
-          <span class="course-tag">Railway</span>
-          <h3>RRB NTPC / Group D</h3>
-        </div>
-        <div class="course-body">
-          <p>A focused, results-driven programme for Railway NTPC and Group D recruitment, emphasising rapid mental calculations, reasoning shortcuts, and high-impact exam-day strategies.</p>
-          <div class="course-subjects">
-            <span class="course-subj">Mathematics</span>
-            <span class="course-subj">Reasoning</span>
-            <span class="course-subj">GK & GS</span>
-            <span class="course-subj">Practice Tests</span>
-          </div>
-          <div class="course-meta">
-            <span><i class="fas fa-clock"></i> 4-Month Program</span>
-            <span><i class="fas fa-users"></i> Batch: 30 Students</span>
-          </div>
-        </div>
-      </div>
-      <div class="course-card reveal reveal-pop stagger-5">
-        <div class="course-header" data-icon="🏆">
-          <span class="course-tag">State Level</span>
-          <h3>West Bengal State PSC</h3>
-        </div>
-        <div class="course-body">
-          <p>Dedicated coaching for WBPSC, WBCS, and allied state-level examinations, incorporating Bengali optional paper preparation and in-depth state-specific general knowledge and current affairs.</p>
-          <div class="course-subjects">
-            <span class="course-subj">WBCS</span>
-            <span class="course-subj">State GK</span>
-            <span class="course-subj">Bengali</span>
-            <span class="course-subj">Interview Prep</span>
-          </div>
-          <div class="course-meta">
-            <span><i class="fas fa-clock"></i> 8-Month Program</span>
-            <span><i class="fas fa-users"></i> Batch: 20 Students</span>
-          </div>
-        </div>
-      </div>
-      <div class="course-card reveal reveal-pop stagger-6">
-        <div class="course-header" data-icon="📐">
-          <span class="course-tag">Special</span>
-          <h3>Mathematics Mastery</h3>
-        </div>
-        <div class="course-body">
-          <p>A structured programme spanning Class 9 to advanced competitive examination level, designed for students seeking to build a strong mathematical foundation or maximise their scores in quantitative sections.</p>
-          <div class="course-subjects">
-            <span class="course-subj">Algebra</span>
-            <span class="course-subj">Calculus</span>
-            <span class="course-subj">Geometry</span>
-            <span class="course-subj">Trigonometry</span>
-            <span class="course-subj">Statistics</span>
-          </div>
-          <div class="course-meta">
-            <span><i class="fas fa-clock"></i> 3-Month Program</span>
-            <span><i class="fas fa-users"></i> Batch: 15 Students</span>
-          </div>
-        </div>
-      </div>
-      <div class="course-card reveal reveal-pop stagger-1">
-        <div class="course-header" data-icon="📈">
-          <span class="course-tag">Management</span>
-          <h3>Mathematics for CAT Aspirants</h3>
-        </div>
-        <div class="course-body">
-          <p>Advanced Quantitative Aptitude (QA) and Data Interpretation (DI) coaching for CAT and management entrance exams (XAT, IIFT, SNAP). Focused on high-speed mental math, Vedic techniques, number systems, and advanced problem-solving strategies.</p>
-          <div class="course-subjects">
-            <span class="course-subj">Quantitative Aptitude</span>
-            <span class="course-subj">Arithmetic &amp; Algebra</span>
-            <span class="course-subj">Geometry &amp; Mensuration</span>
-            <span class="course-subj">Modern Math</span>
-            <span class="course-subj">DI &amp; Speed Math</span>
-          </div>
-          <div class="course-meta">
-            <span><i class="fas fa-clock"></i> 6-Month Program</span>
-            <span><i class="fas fa-users"></i> Batch: 15 Students</span>
-          </div>
-        </div>
-      </div>
-      <div class="course-card reveal reveal-pop stagger-2">
+
+      <!-- 2. NEET Physics -->
+      <div class="course-card reveal reveal-pop stagger-2" data-category="engineering-medical">
         <div class="course-header" data-icon="🩺">
-          <span class="course-tag">Medical</span>
+          <div class="course-header-top">
+            <div class="course-icon-badge">🩺</div>
+            <span class="course-tag">Medical Physics</span>
+          </div>
           <h3>NEET Physics Specialist</h3>
         </div>
         <div class="course-body">
-          <p>Targeted Physics coaching specifically engineered for medical aspirants aiming for a 160+ Physics score in NEET-UG. Features thorough NCERT alignment, numerical problem breakdown, formula mapping, and regular chapter-wise speed tests.</p>
+          <p>Targeted Physics coaching specifically engineered for medical aspirants aiming for a 160+ Physics score in NEET-UG, featuring thorough NCERT conceptual breakdown, numerical problem mastery, formula mapping, and speed tests.</p>
+          <div class="course-subjects-title">Core Focus Areas</div>
           <div class="course-subjects">
             <span class="course-subj">Mechanics</span>
             <span class="course-subj">Electrodynamics</span>
@@ -1838,9 +1960,200 @@
             <span class="course-subj">Modern Physics</span>
             <span class="course-subj">NCERT Numericals</span>
           </div>
-          <div class="course-meta">
-            <span><i class="fas fa-clock"></i> 1-Year Program</span>
-            <span><i class="fas fa-users"></i> Batch: 20 Students</span>
+          <div class="course-perks">
+            <div class="course-perk"><i class="fas fa-check-circle"></i> 100% NCERT Alignment &amp; Formula Sheets</div>
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Elimination &amp; Mental Math Shortcut Techniques</div>
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Chapter-wise High-Speed Drill Tests</div>
+          </div>
+          <div class="course-footer">
+            <div class="course-delivery"><i class="fas fa-chalkboard-teacher"></i> <span>Classroom &amp; Online</span></div>
+            <a href="#contact" class="btn-course-cta" onclick="selectCourse('NEET Physics Specialist')">Enroll Now <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. UPSC Civil Services -->
+      <div class="course-card reveal reveal-pop stagger-3" data-category="civil-govt">
+        <div class="course-header" data-icon="🏛️">
+          <div class="course-header-top">
+            <div class="course-icon-badge">🏛️</div>
+            <span class="course-tag">Civil Services</span>
+          </div>
+          <h3>UPSC Civil Services Prep</h3>
+        </div>
+        <div class="course-body">
+          <p>A comprehensive preparation programme covering all three stages — Prelims (GS &amp; CSAT), Mains, and Interview — with extensive analytical coverage, structured answer-writing workshops, and consistent one-on-one mentoring.</p>
+          <div class="course-subjects-title">Core Focus Areas</div>
+          <div class="course-subjects">
+            <span class="course-subj">GS Paper I-IV</span>
+            <span class="course-subj">CSAT Quant &amp; Logic</span>
+            <span class="course-subj">Essay Writing</span>
+            <span class="course-subj">Current Affairs</span>
+            <span class="course-subj">Interview Guidance</span>
+          </div>
+          <div class="course-perks">
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Complete CSAT Quantitative &amp; Analytical Mastery</div>
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Evaluated Answer-Writing Workshops</div>
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Personalized Preparation Roadmap</div>
+          </div>
+          <div class="course-footer">
+            <div class="course-delivery"><i class="fas fa-chalkboard-teacher"></i> <span>Classroom &amp; Online</span></div>
+            <a href="#contact" class="btn-course-cta" onclick="selectCourse('UPSC Civil Services Prep')">Enroll Now <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. SSC CGL / CHSL / MTS -->
+      <div class="course-card reveal reveal-pop stagger-4" data-category="civil-govt">
+        <div class="course-header" data-icon="📋">
+          <div class="course-header-top">
+            <div class="course-icon-badge">📋</div>
+            <span class="course-tag">Central Govt</span>
+          </div>
+          <h3>SSC CGL / CHSL / MTS</h3>
+        </div>
+        <div class="course-body">
+          <p>An exhaustive programme covering all sections of SSC examinations — Quantitative Aptitude, English, Logical Reasoning, and General Awareness — with proven shortcut techniques, mental calculations, and time management training.</p>
+          <div class="course-subjects-title">Core Focus Areas</div>
+          <div class="course-subjects">
+            <span class="course-subj">Quantitative Aptitude</span>
+            <span class="course-subj">Logical Reasoning</span>
+            <span class="course-subj">English Comprehension</span>
+            <span class="course-subj">General Awareness</span>
+            <span class="course-subj">Tier-I &amp; II Drills</span>
+          </div>
+          <div class="course-perks">
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Vedic &amp; Speed-Math Calculation Techniques</div>
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Real Exam Computer-Based Testing Simulation</div>
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Previous 10 Years' Exam Question Sets</div>
+          </div>
+          <div class="course-footer">
+            <div class="course-delivery"><i class="fas fa-chalkboard-teacher"></i> <span>Classroom &amp; Online</span></div>
+            <a href="#contact" class="btn-course-cta" onclick="selectCourse('SSC CGL / CHSL / MTS')">Enroll Now <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Railway RRB NTPC -->
+      <div class="course-card reveal reveal-pop stagger-5" data-category="civil-govt">
+        <div class="course-header" data-icon="🚂">
+          <div class="course-header-top">
+            <div class="course-icon-badge">🚂</div>
+            <span class="course-tag">Railway</span>
+          </div>
+          <h3>RRB NTPC / Group D</h3>
+        </div>
+        <div class="course-body">
+          <p>A focused, results-driven programme for Railway NTPC and Group D recruitment, emphasising rapid mental calculations, reasoning shortcuts, section-wise drills, and high-impact exam-day strategies.</p>
+          <div class="course-subjects-title">Core Focus Areas</div>
+          <div class="course-subjects">
+            <span class="course-subj">Mathematics</span>
+            <span class="course-subj">General Intelligence</span>
+            <span class="course-subj">General Science</span>
+            <span class="course-subj">Current Affairs</span>
+            <span class="course-subj">Speed Tests</span>
+          </div>
+          <div class="course-perks">
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Rapid Numerical &amp; Reasoning Speed Training</div>
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Comprehensive General Science Question Bank</div>
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Regular CBT Practice Examinations</div>
+          </div>
+          <div class="course-footer">
+            <div class="course-delivery"><i class="fas fa-chalkboard-teacher"></i> <span>Classroom &amp; Online</span></div>
+            <a href="#contact" class="btn-course-cta" onclick="selectCourse('RRB NTPC / Group D')">Enroll Now <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. West Bengal State PSC -->
+      <div class="course-card reveal reveal-pop stagger-6" data-category="civil-govt">
+        <div class="course-header" data-icon="🏆">
+          <div class="course-header-top">
+            <div class="course-icon-badge">🏆</div>
+            <span class="course-tag">State Services</span>
+          </div>
+          <h3>West Bengal State PSC (WBCS)</h3>
+        </div>
+        <div class="course-body">
+          <p>Dedicated coaching for WBPSC, WBCS, and allied state-level examinations, incorporating complete syllabus coverage, optional subject guidance, state-specific current affairs, and structured mock evaluations.</p>
+          <div class="course-subjects-title">Core Focus Areas</div>
+          <div class="course-subjects">
+            <span class="course-subj">WBCS Prelims &amp; Mains</span>
+            <span class="course-subj">State History &amp; GK</span>
+            <span class="course-subj">Math &amp; Reasoning</span>
+            <span class="course-subj">Bengali Language</span>
+            <span class="course-subj">Interview Guidance</span>
+          </div>
+          <div class="course-perks">
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Exclusive Focus on West Bengal Specific Modules</div>
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Answer-Writing Evaluation for Mains Papers</div>
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Complete State Service Interview Preparation</div>
+          </div>
+          <div class="course-footer">
+            <div class="course-delivery"><i class="fas fa-chalkboard-teacher"></i> <span>Classroom &amp; Online</span></div>
+            <a href="#contact" class="btn-course-cta" onclick="selectCourse('West Bengal State PSC (WBCS)')">Enroll Now <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Mathematics for CAT -->
+      <div class="course-card reveal reveal-pop stagger-1" data-category="management-math">
+        <div class="course-header" data-icon="📈">
+          <div class="course-header-top">
+            <div class="course-icon-badge">📈</div>
+            <span class="course-tag">Management</span>
+          </div>
+          <h3>Mathematics for CAT Aspirants</h3>
+        </div>
+        <div class="course-body">
+          <p>Advanced Quantitative Aptitude (QA) and Data Interpretation (DI) coaching for CAT, XAT, IIFT, and SNAP entrance exams, focused on high-speed mental math, Vedic techniques, number systems, and advanced problem-solving strategies.</p>
+          <div class="course-subjects-title">Core Focus Areas</div>
+          <div class="course-subjects">
+            <span class="course-subj">Quantitative Aptitude</span>
+            <span class="course-subj">Arithmetic &amp; Algebra</span>
+            <span class="course-subj">Geometry &amp; Mensuration</span>
+            <span class="course-subj">Modern Math</span>
+            <span class="course-subj">DI &amp; Speed Math</span>
+          </div>
+          <div class="course-perks">
+            <div class="course-perk"><i class="fas fa-check-circle"></i> 99+ Percentile Strategy &amp; Question Selection</div>
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Rigorous Non-Routine Problem Solving</div>
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Full-Length CAT Mock Simulations with Debriefs</div>
+          </div>
+          <div class="course-footer">
+            <div class="course-delivery"><i class="fas fa-chalkboard-teacher"></i> <span>Classroom &amp; Online</span></div>
+            <a href="#contact" class="btn-course-cta" onclick="selectCourse('Mathematics for CAT Aspirants')">Enroll Now <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. Mathematics Mastery -->
+      <div class="course-card reveal reveal-pop stagger-2" data-category="management-math">
+        <div class="course-header" data-icon="📐">
+          <div class="course-header-top">
+            <div class="course-icon-badge">📐</div>
+            <span class="course-tag">Foundation &amp; Advanced</span>
+          </div>
+          <h3>Mathematics Mastery</h3>
+        </div>
+        <div class="course-body">
+          <p>A structured programme spanning fundamental concepts to advanced competitive examination level, designed for students seeking to build an unshakeable mathematical foundation and master quantitative sections.</p>
+          <div class="course-subjects-title">Core Focus Areas</div>
+          <div class="course-subjects">
+            <span class="course-subj">Algebra</span>
+            <span class="course-subj">Calculus</span>
+            <span class="course-subj">Geometry</span>
+            <span class="course-subj">Trigonometry</span>
+            <span class="course-subj">Applied Statistics</span>
+          </div>
+          <div class="course-perks">
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Conceptual Intuition over Formula Recall</div>
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Comprehensive Handpicked Practice Worksheets</div>
+            <div class="course-perk"><i class="fas fa-check-circle"></i> Daily 1-on-1 Step-by-Step Doubt Clearing</div>
+          </div>
+          <div class="course-footer">
+            <div class="course-delivery"><i class="fas fa-chalkboard-teacher"></i> <span>Classroom &amp; Online</span></div>
+            <a href="#contact" class="btn-course-cta" onclick="selectCourse('Mathematics Mastery')">Enroll Now <i class="fas fa-arrow-right"></i></a>
           </div>
         </div>
       </div>
@@ -2078,16 +2391,16 @@
           </div>
           <div class="form-group">
             <label>Program of Interest <span style="color:var(--accent)">*</span></label>
-            <select required>
+            <select id="programSelect" required>
               <option value="">Select a program...</option>
-              <option>IIT-JEE Foundation &amp; Advanced</option>
-              <option>NEET Physics Specialist</option>
-              <option>Mathematics for CAT Aspirants</option>
-              <option>UPSC Civil Services Prep</option>
-              <option>SSC CGL / CHSL / MTS</option>
-              <option>RRB NTPC / Group D</option>
-              <option>West Bengal State PSC (WBCS)</option>
-              <option>Mathematics Mastery</option>
+              <option value="IIT-JEE Foundation & Advanced">IIT-JEE Foundation &amp; Advanced</option>
+              <option value="NEET Physics Specialist">NEET Physics Specialist</option>
+              <option value="Mathematics for CAT Aspirants">Mathematics for CAT Aspirants</option>
+              <option value="UPSC Civil Services Prep">UPSC Civil Services Prep</option>
+              <option value="SSC CGL / CHSL / MTS">SSC CGL / CHSL / MTS</option>
+              <option value="RRB NTPC / Group D">RRB NTPC / Group D</option>
+              <option value="West Bengal State PSC (WBCS)">West Bengal State PSC (WBCS)</option>
+              <option value="Mathematics Mastery">Mathematics Mastery</option>
             </select>
           </div>
           <div class="form-group">
@@ -2552,6 +2865,44 @@
     setTimeout(() => {
       card.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 250);
+  }
+
+  /* ---- COURSE FILTER & ENROLL SELECT ---- */
+  function filterCourses(category, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    const cards = document.querySelectorAll('.course-card');
+    cards.forEach(card => {
+      const cardCat = card.getAttribute('data-category') || '';
+      if (category === 'all' || cardCat.includes(category)) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  function selectCourse(courseName) {
+    const select = document.getElementById('programSelect');
+    if (select) {
+      for (let i = 0; i < select.options.length; i++) {
+        const optVal = select.options[i].value || select.options[i].text;
+        if (optVal.toLowerCase().includes(courseName.toLowerCase()) || courseName.toLowerCase().includes(optVal.toLowerCase())) {
+          select.selectedIndex = i;
+          break;
+        }
+      }
+      setTimeout(() => {
+        select.focus();
+        select.style.borderColor = 'var(--accent)';
+        select.style.boxShadow = '0 0 0 4px rgba(232, 160, 32, 0.35)';
+        setTimeout(() => {
+          select.style.borderColor = '';
+          select.style.boxShadow = '';
+        }, 2200);
+      }, 400);
+    }
   }
 
   /* ---- SMOOTH NAV ACTIVE ---- */
