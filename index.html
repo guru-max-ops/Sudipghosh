@@ -318,27 +318,153 @@
     #about { background: var(--light-bg); }
     .about-grid {
       display: grid; grid-template-columns: 1fr 1fr;
-      gap: 72px; align-items: center;
+      gap: 60px; align-items: center;
     }
-    .about-left { display: flex; flex-direction: column; gap: 20px; }
-    .about-card {
-      background: var(--white); border-radius: var(--radius);
-      padding: 32px; box-shadow: var(--shadow);
+    .about-left { display: flex; flex-direction: column; }
+    .mentor-profile-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 34px 30px;
+      box-shadow: var(--shadow);
       border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
     }
-    .about-card h3 {
+    .mentor-profile-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent2), var(--accent));
+    }
+    .mp-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .mp-avatar {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent2));
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-family: 'Playfair Display', serif;
-      font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 12px;
+      font-size: 1.55rem;
+      font-weight: 700;
+      box-shadow: 0 6px 18px rgba(26, 60, 94, 0.22);
+      flex-shrink: 0;
+      border: 2px solid rgba(255, 255, 255, 0.9);
     }
-    .about-card p { color: var(--text-mid); line-height: 1.8; font-size: 0.97rem; }
-    .about-quals { display: flex; flex-direction: column; gap: 12px; }
-    .qual-item {
-      display: flex; align-items: center; gap: 12px;
-      background: var(--light-bg); border-radius: var(--radius-sm);
-      padding: 12px 16px; border-left: 3px solid var(--accent);
+    .mp-meta h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 3px;
+      line-height: 1.2;
     }
-    .qual-item i { color: var(--accent); font-size: 1rem; min-width: 20px; }
-    .qual-item p { font-size: 0.9rem; color: var(--text-dark); font-weight: 500; }
+    .mp-degree {
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      font-weight: 500;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .mp-degree i { color: var(--accent); }
+    .mp-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--accent2);
+      background: rgba(46, 125, 159, 0.09);
+      border: 1px solid rgba(46, 125, 159, 0.22);
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .mp-divider {
+      height: 1px;
+      background: var(--border);
+      width: 100%;
+    }
+    .mp-details {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .mp-detail-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--light-bg);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      border-left: 3px solid var(--accent);
+      transition: var(--transition);
+    }
+    .mp-detail-item:hover {
+      background: #edf2f8;
+      transform: translateX(3px);
+    }
+    .mp-detail-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(232, 160, 32, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 0.92rem;
+      flex-shrink: 0;
+    }
+    .mp-detail-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .mp-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-light);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .mp-detail-info strong {
+      font-size: 0.88rem;
+      color: var(--text-dark);
+      font-weight: 600;
+      line-height: 1.35;
+    }
+    .mp-quote {
+      background: linear-gradient(135deg, rgba(26, 60, 94, 0.03), rgba(46, 125, 159, 0.06));
+      border: 1px dashed rgba(46, 125, 159, 0.28);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      position: relative;
+    }
+    .mp-quote i {
+      color: var(--accent);
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .mp-quote p {
+      font-size: 0.84rem;
+      color: var(--text-mid);
+      font-style: italic;
+      line-height: 1.55;
+    }
     .about-right { display: flex; flex-direction: column; gap: 24px; }
     .about-para {
       font-size: 1rem; color: var(--text-mid); line-height: 1.9;
@@ -1264,9 +1390,13 @@
       /* About Section */
       #about { padding: 48px 14px; }
       .about-grid { grid-template-columns: 1fr; gap: 24px; }
-      .about-card { padding: 20px 16px; border-radius: 16px; }
-      .about-card h3 { font-size: 1.35rem; }
-      .about-card p { font-size: 0.88rem; line-height: 1.7; }
+      .mentor-profile-card { padding: 22px 16px; border-radius: 16px; gap: 16px; }
+      .mp-avatar { width: 52px; height: 52px; font-size: 1.3rem; }
+      .mp-meta h3 { font-size: 1.22rem; }
+      .mp-detail-item { padding: 10px 12px; gap: 10px; }
+      .mp-detail-info strong { font-size: 0.82rem; }
+      .mp-quote { padding: 12px 14px; }
+      .mp-quote p { font-size: 0.8rem; }
       .about-highlights { grid-template-columns: 1fr; gap: 10px; }
 
       /* Courses Section */
@@ -1426,33 +1556,53 @@
   <div class="container">
     <div class="about-grid">
       <div class="about-left reveal reveal-left">
-        <div class="about-card">
-          <h3>About Sudip Ghosh</h3>
-          <p>A distinguished educator from West Bengal, Sudip Ghosh holds a Master's degree in Mathematics from BHU and brings over 20+ years of focused expertise in competitive examination coaching. He is widely recognised for his ability to simplify intricate concepts with clarity, precision, and a student-first approach.</p>
-        </div>
-        <div class="about-quals">
-          <div class="qual-item">
-            <i class="fas fa-graduation-cap"></i>
-            <p>M.Sc. Mathematics — BHU</p>
+        <div class="mentor-profile-card">
+          <div class="mp-header">
+            <div class="mp-avatar">SG</div>
+            <div class="mp-meta">
+              <h3>Sudip Ghosh</h3>
+              <p class="mp-degree"><i class="fas fa-graduation-cap"></i> M.Sc. Mathematics &middot; BHU</p>
+              <span class="mp-badge"><i class="fas fa-certificate"></i> 20+ Years Mentoring</span>
+            </div>
           </div>
-          <div class="qual-item">
-            <i class="fas fa-award"></i>
-            <p>20+ Years of Competitive Exam Coaching Experience</p>
+          <div class="mp-divider"></div>
+          <div class="mp-details">
+            <div class="mp-detail-item">
+              <div class="mp-detail-icon"><i class="fas fa-university"></i></div>
+              <div class="mp-detail-info">
+                <span class="mp-label">Academic Pedigree</span>
+                <strong>Master of Science in Mathematics — BHU</strong>
+              </div>
+            </div>
+            <div class="mp-detail-item">
+              <div class="mp-detail-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+              <div class="mp-detail-info">
+                <span class="mp-label">Teaching Experience</span>
+                <strong>20+ Years of Competitive Exam Coaching</strong>
+              </div>
+            </div>
+            <div class="mp-detail-item">
+              <div class="mp-detail-icon"><i class="fas fa-crosshairs"></i></div>
+              <div class="mp-detail-info">
+                <span class="mp-label">Examination Focus</span>
+                <strong>IIT-JEE, NEET Physics, CAT, UPSC &amp; State PSC</strong>
+              </div>
+            </div>
           </div>
-          <div class="qual-item">
-            <i class="fas fa-chalkboard-teacher"></i>
-            <p>Expert in IIT-JEE, UPSC, SSC & State-Level Exams</p>
+          <div class="mp-quote">
+            <i class="fas fa-quote-left"></i>
+            <p>"True mathematical mastery isn't memorising formulas — it is developing the intuition to solve any problem from first principles."</p>
           </div>
         </div>
       </div>
       <div class="about-right reveal reveal-right reveal-delay-2">
-        <div class="section-label">About Me</div>
+        <div class="section-label">About The Mentor</div>
         <h2 class="section-title">Committed to Your <span style="color:var(--accent2)">Academic Excellence</span></h2>
         <p class="about-para">
-          I am <strong>Sudip Ghosh</strong>, and I firmly believe that every student carries the potential to surpass their own expectations — they simply need the right mentor to unlock it. My pedagogy is built on three pillars: conceptual depth, structured practice, and unwavering personalised mentoring.
+          I am <strong>Sudip Ghosh</strong>, an educator with an M.Sc. in Mathematics from <strong>Banaras Hindu University (BHU)</strong>. For over <strong>20+ years</strong>, I have dedicated my career to demystifying complex concepts, breaking down difficult subjects with clarity, precision, and a student-first approach.
         </p>
         <p class="about-para">
-          Over the past 20+ years, I have personally guided students to rank in the top percentiles of <strong>IIT-JEE</strong>, clear <strong>UPSC Civil Services</strong>, and secure coveted central and state government positions through <strong>SSC, Railway NTPC</strong>, and <strong>State PSC</strong> examinations.
+          Over the past two decades, I have personally guided students to top percentiles in <strong>IIT-JEE</strong> and <strong>NEET Physics</strong>, cracked <strong>UPSC Civil Services</strong>, and secured coveted positions through <strong>SSC, Railway NTPC</strong>, and <strong>State PSC</strong> examinations. My pedagogy unites three pillars: <strong>deep conceptual understanding</strong>, <strong>high-speed analytical practice</strong>, and <strong>dedicated 1-on-1 mentorship</strong>.
         </p>
         <div class="about-highlights">
           <div class="hl-item">
@@ -1466,21 +1616,21 @@
             <div class="hl-icon"><i class="fas fa-chart-line"></i></div>
             <div class="hl-text">
               <h4>Proven Track Record</h4>
-              <p>92% student success rate</p>
+              <p>92% student success rate across exams</p>
             </div>
           </div>
           <div class="hl-item">
             <div class="hl-icon"><i class="fas fa-users"></i></div>
             <div class="hl-text">
               <h4>Limited Batch Sizes</h4>
-              <p>Personalised attention, guaranteed</p>
+              <p>Personalised attention guaranteed (15–20 max)</p>
             </div>
           </div>
           <div class="hl-item">
             <div class="hl-icon"><i class="fas fa-clock"></i></div>
             <div class="hl-text">
               <h4>Daily Doubt Sessions</h4>
-              <p>No question ever goes unanswered</p>
+              <p>No conceptual hurdle ever left unresolved</p>
             </div>
           </div>
         </div>
